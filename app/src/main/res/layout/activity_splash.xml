@@ -20,6 +20,12 @@
             android:layout_height="wrap_content"
             android:text="최종프로젝트 - 사용자단" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="* 본 프로젝트는 포트폴리오용입니다.\n백엔드는 수강생분들이, 앱은 강사가 작업중입니다." />
 
     </LinearLayout>
 </layout>
