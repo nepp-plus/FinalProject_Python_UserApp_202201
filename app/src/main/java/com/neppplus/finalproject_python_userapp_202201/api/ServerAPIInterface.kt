@@ -19,4 +19,12 @@ interface ServerAPIInterface {
         @Field("phone") phone: String,
     ): Call<BasicResponse>
 
+
+    @FormUrlEncoded
+    @POST("/user")
+    fun postRequestLogin(
+        @Field("email") email: String,
+        @Field("password") pw: String,
+    ): Call<BasicResponse>
+
 }
