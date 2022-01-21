@@ -10,8 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject_Python_UserApp_202201">
         <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.FinalProject_Python_UserApp_202201.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
