@@ -7,14 +7,21 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.neppplus.gudocin_android.api.ServerAPI
+import com.neppplus.gudocin_android.api.ServerAPIInterface
 
 abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var mContext: Context
 
+    lateinit var apiList: ServerAPIInterface
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = this
+
+        val retrofit = ServerAPI.getRetrofit(mContext)
+        apiList = retrofit.create(ServerAPIInterface::class.java)
+
 
         supportActionBar?.let {
             setCustomActionBar()
