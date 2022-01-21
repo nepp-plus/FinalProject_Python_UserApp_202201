@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityLoginBinding
 import com.neppplus.gudocin_android.datas.BasicResponse
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,16 +39,24 @@ class LoginActivity : BaseActivity() {
                     response: Response<BasicResponse>
                 ) {
 
-                    val br = response.body()!!
-                    val loginUser = br.data.user
+                    if (response.isSuccessful) {
+                        val br = response.body()!!
+                        val loginUser = br.data.user
 
-                    Toast.makeText(mContext, "${loginUser.name}님, 환영합니다!", Toast.LENGTH_SHORT)
-                        .show()
+                        Toast.makeText(mContext, "${loginUser.name}님, 환영합니다!", Toast.LENGTH_SHORT)
+                            .show()
 
 
-                    val myIntent = Intent(mContext, MainActivity::class.java)
-                    startActivity(myIntent)
-                    finish()
+                        val myIntent = Intent(mContext, MainActivity::class.java)
+                        startActivity(myIntent)
+                        finish()
+                    }
+                    else {
+                        val jsonObj = JSONObject(response.errorBody()!!.string())
+
+                        Toast.makeText(mContext, jsonObj.getString("message"), Toast.LENGTH_SHORT).show()
+                    }
+
 
                 }
 
