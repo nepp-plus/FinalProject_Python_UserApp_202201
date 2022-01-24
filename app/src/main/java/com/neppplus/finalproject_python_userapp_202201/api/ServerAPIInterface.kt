@@ -46,4 +46,14 @@ interface ServerAPIInterface {
     fun getRequestProductsBySmallCategory(
         @Path("small_category_id") id: Int,
     ): Call<BasicResponse>
+
+
+    @FormUrlEncoded
+    @POST("/cart")
+    fun postRequestCart(
+        @Field("product_id") productId: Int,
+        @Field("quantity") quantity: Int,
+    ): Call<BasicResponse>
+
+
 }

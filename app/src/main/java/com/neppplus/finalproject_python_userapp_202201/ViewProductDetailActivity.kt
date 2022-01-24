@@ -3,11 +3,18 @@ package com.neppplus.finalproject_python_userapp_202201
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewProductDetailBinding
+import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
 import com.neppplus.finalproject_python_userapp_202201.utils.WonFormatUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ViewProductDetailActivity : BaseActivity() {
 
@@ -26,6 +33,43 @@ class ViewProductDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        binding.btnCart.setOnClickListener {
+
+            apiList.postRequestCart(
+                mProduct.id,
+                buyQuantity,
+            ).enqueue(object : Callback<BasicResponse> {
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+
+                    if (response.isSuccessful) {
+
+                        val customView = LayoutInflater.from(mContext).inflate(R.layout.fragment_cart_bottom_sheet, null)
+                        val dialog = BottomSheetDialog(mContext)
+                        dialog.setContentView(customView)
+                        dialog.show()
+
+                    }
+                    else {
+                        Toast.makeText(
+                            mContext,
+                            "장바구니 등록에 실패했습니다. 관리자에게 문의해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                }
+
+            })
+
+        }
 
         binding.btnPlus.setOnClickListener {
             buyQuantity += 1

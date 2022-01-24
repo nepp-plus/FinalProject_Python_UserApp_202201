@@ -14,7 +14,7 @@ class ServerAPI {
     companion object {
 
 //        private var BASE_URL = "http://3.35.185.121"
-        private var BASE_URL = "http://api.copang.xyz"
+        private var BASE_URL = "https://api.copang.xyz"
 
         private var retrofit: Retrofit? = null
 
