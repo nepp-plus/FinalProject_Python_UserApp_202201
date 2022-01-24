@@ -6,6 +6,7 @@ import com.neppplus.finalproject_python_userapp_202201.models.UserData
 
 class DataResponse(
     val user: UserData,
+    val token: String,
 
     val large_categories: List<LargeCategoryData>,
 ) {

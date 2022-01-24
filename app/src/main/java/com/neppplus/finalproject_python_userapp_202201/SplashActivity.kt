@@ -33,6 +33,7 @@ class SplashActivity : BaseActivity() {
         apiList.getRequestMyInfo().enqueue(object : Callback<BasicResponse> {
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
 
+                Log.d("response", response.toString())
                 if (response.isSuccessful) {
                     val basicResponse = response.body()!!
                     GlobalData.loginUser =  basicResponse.data.user

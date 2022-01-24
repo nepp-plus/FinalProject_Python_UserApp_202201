@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityLoginBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
+import com.neppplus.finalproject_python_userapp_202201.utils.ContextUtil
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,6 +47,7 @@ class LoginActivity : BaseActivity() {
                         Toast.makeText(mContext, "${loginUser.name}님, 환영합니다!", Toast.LENGTH_SHORT)
                             .show()
 
+                        ContextUtil.setToken(mContext, br.data.token)
 
                         val myIntent = Intent(mContext, MainActivity::class.java)
                         startActivity(myIntent)
