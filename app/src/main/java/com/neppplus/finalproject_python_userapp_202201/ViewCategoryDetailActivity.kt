@@ -1,5 +1,6 @@
 package com.neppplus.finalproject_python_userapp_202201
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -38,6 +39,19 @@ class ViewCategoryDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        mProductsAdapter = ProductAdapter(mContext, mProductList)
+
+        mProductsAdapter.setOnItemClick(object : ProductAdapter.OnItemClick {
+            override fun onItemClick(position: Int) {
+
+                val clickedProduct = mProductList[position]
+
+                val myIntent = Intent(mContext, ViewProductDetailActivity::class.java)
+                myIntent.putExtra("product", clickedProduct)
+                startActivity(myIntent)
+            }
+
+        })
 
         binding.smallCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
@@ -86,7 +100,6 @@ class ViewCategoryDetailActivity : BaseActivity() {
         mSmallCategorySpinnerAdapter = SmallCategorySpinnerAdapter(mContext, mSmallCategoryList)
         binding.smallCategorySpinner.adapter = mSmallCategorySpinnerAdapter
 
-        mProductsAdapter = ProductAdapter(mContext, mProductList)
         binding.productRecyclerView.adapter = mProductsAdapter
         binding.productRecyclerView.layoutManager = LinearLayoutManager(mContext)
 

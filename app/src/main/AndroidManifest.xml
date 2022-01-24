@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FinalProject_Python_UserApp_202201"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ViewProductDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".ViewCategoryDetailActivity"
             android:exported="true" />
         <activity
