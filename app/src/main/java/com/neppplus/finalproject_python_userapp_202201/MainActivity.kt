@@ -2,6 +2,7 @@ package com.neppplus.finalproject_python_userapp_202201
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,6 +20,8 @@ class MainActivity : BaseActivity() {
 
     lateinit var binding: ActivityMainBinding
 
+    var startFragmentIndex = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -35,6 +38,16 @@ class MainActivity : BaseActivity() {
         binding.mainViewPager.adapter = PagerAdapter(supportFragmentManager, lifecycle)
         binding.mainViewPager.registerOnPageChangeCallback(PageChangeCallback())
         binding.mainBottomNav.setOnItemSelectedListener { navigationSelected(it) }
+
+        startFragmentIndex = intent.getIntExtra("startFragmentIndex", 0)
+        binding.mainBottomNav.selectedItemId = when (startFragmentIndex) {
+            0 -> R.id.nav_home
+            1 -> R.id.nav_category
+            2 -> R.id.nav_cart
+            3 -> R.id.nav_my_info
+            else -> R.id.nav_home
+
+        }
 
     }
 

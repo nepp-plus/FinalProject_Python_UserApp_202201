@@ -1,9 +1,12 @@
 package com.neppplus.finalproject_python_userapp_202201
 
+import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -49,8 +52,24 @@ class ViewProductDetailActivity : BaseActivity() {
 
                         val customView = LayoutInflater.from(mContext).inflate(R.layout.fragment_cart_bottom_sheet, null)
                         val dialog = BottomSheetDialog(mContext)
+
+                        val imgProductThumbnail = customView.findViewById<ImageView>(R.id.imgProductThumbnail)
+                        val imgClose = customView.findViewById<ImageView>(R.id.imgClose)
+                        val btnGoCart = customView.findViewById<TextView>(R.id.btnGoCart)
+
                         dialog.setContentView(customView)
                         dialog.show()
+
+                        imgClose.setOnClickListener {
+                            dialog.dismiss()
+                        }
+
+                        btnGoCart.setOnClickListener {
+                            val myIntent = Intent(mContext, MainActivity::class.java)
+                            myIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            myIntent.putExtra("startFragmentIndex", 2)
+                            startActivity(myIntent)
+                        }
 
                     }
                     else {
