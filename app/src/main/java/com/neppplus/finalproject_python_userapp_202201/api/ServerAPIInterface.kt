@@ -31,4 +31,8 @@ interface ServerAPIInterface {
 
     ): Call<BasicResponse>
 
+    @GET("/user")
+    fun getRequestMyInfo(
+
+    ): Call<BasicResponse>
 }
