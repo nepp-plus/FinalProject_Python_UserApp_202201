@@ -1,6 +1,7 @@
 package com.neppplus.finalproject_python_userapp_202201.adapters
 
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.models.LargeCategoryData
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
+import com.neppplus.finalproject_python_userapp_202201.utils.WonFormatUtil
 
 class ProductAdapter(
     val mContext: Context,
@@ -37,10 +39,22 @@ class ProductAdapter(
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
+        val imgProductThumbnail = view.findViewById<ImageView>(R.id.imgProductThumbnail)
+        val txtProductName = view.findViewById<TextView>(R.id.txtProductName)
+        val txtSalePercent = view.findViewById<TextView>(R.id.txtSalePercent)
+        val txtOriginalPrice = view.findViewById<TextView>(R.id.txtOriginalPrice)
+        val txtSalePrice = view.findViewById<TextView>(R.id.txtSalePrice)
+
         fun bind(data: ProductData, position: Int) {
 
+            txtProductName.text = data.name
+            txtOriginalPrice.text = WonFormatUtil.getWonFormat(data.original_price)
+            txtOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG or txtOriginalPrice.paintFlags
+            txtSalePrice.text = WonFormatUtil.getWonFormat(data.sale_price)
 
+            val salePercent = (((data.original_price - data.sale_price).toDouble() / data.original_price.toDouble()) * 100).toInt()
 
+            txtSalePercent.text = "${salePercent}%"
 
             if (oic != null) {
                 view.setOnClickListener {
