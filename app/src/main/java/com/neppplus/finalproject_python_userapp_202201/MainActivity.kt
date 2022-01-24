@@ -10,7 +10,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityMainBinding
+import com.neppplus.finalproject_python_userapp_202201.fragments.CartFragment
+import com.neppplus.finalproject_python_userapp_202201.fragments.CategoryFragment
 import com.neppplus.finalproject_python_userapp_202201.fragments.HomeFragment
+import com.neppplus.finalproject_python_userapp_202201.fragments.MyInfoFragment
 
 class MainActivity : BaseActivity() {
 
@@ -41,9 +44,9 @@ class MainActivity : BaseActivity() {
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> HomeFragment()
-                1 -> HomeFragment()
-                2 -> HomeFragment()
-                3 -> HomeFragment()
+                1 -> CategoryFragment()
+                2 -> CartFragment()
+                3 -> MyInfoFragment()
                 else -> error("no such position: $position")
             }
         }
