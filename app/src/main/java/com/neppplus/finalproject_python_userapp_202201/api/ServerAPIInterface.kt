@@ -1,8 +1,6 @@
-package com.neppplus.gudocin_android.api
+package com.neppplus.finalproject_python_userapp_202201.api
 
-import com.neppplus.gudocin_android.datas.BasicResponse
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -25,6 +23,12 @@ interface ServerAPIInterface {
     fun postRequestLogin(
         @Field("email") email: String,
         @Field("password") pw: String,
+    ): Call<BasicResponse>
+
+
+    @GET("/largecategory")
+    fun getRequestLargeCategory(
+
     ): Call<BasicResponse>
 
 }

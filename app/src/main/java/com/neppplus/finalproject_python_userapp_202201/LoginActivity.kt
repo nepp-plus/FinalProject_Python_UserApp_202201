@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityLoginBinding
-import com.neppplus.gudocin_android.datas.BasicResponse
+import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback

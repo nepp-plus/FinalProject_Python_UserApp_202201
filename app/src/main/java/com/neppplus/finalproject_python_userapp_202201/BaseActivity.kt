@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.neppplus.gudocin_android.api.ServerAPI
-import com.neppplus.gudocin_android.api.ServerAPIInterface
+import com.neppplus.finalproject_python_userapp_202201.api.ServerAPI
+import com.neppplus.finalproject_python_userapp_202201.api.ServerAPIInterface
 
 abstract class BaseActivity : AppCompatActivity() {
 
