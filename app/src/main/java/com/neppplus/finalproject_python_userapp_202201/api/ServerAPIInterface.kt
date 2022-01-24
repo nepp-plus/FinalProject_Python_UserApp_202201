@@ -55,5 +55,9 @@ interface ServerAPIInterface {
         @Field("quantity") quantity: Int,
     ): Call<BasicResponse>
 
+    @GET("/cart")
+    fun getRequestMyCart(
+
+    ): Call<BasicResponse>
 
 }
