@@ -41,4 +41,9 @@ interface ServerAPIInterface {
     fun getRequestSmallCategory(
         @Path("large_category_id") id: Int,
     ): Call<BasicResponse>
+
+    @GET("/smallcategory/{small_category_id}/product")
+    fun getRequestProductsBySmallCategory(
+        @Path("small_category_id") id: Int,
+    ): Call<BasicResponse>
 }

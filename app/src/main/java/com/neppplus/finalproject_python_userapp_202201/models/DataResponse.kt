@@ -10,5 +10,7 @@ class DataResponse(
 
     val large_categories: List<LargeCategoryData>,
     val small_categories: List<SmallCategoryData>,
+
+    val products: List<ProductData>,
 ) {
 }

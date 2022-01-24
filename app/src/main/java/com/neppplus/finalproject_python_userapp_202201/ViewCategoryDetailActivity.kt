@@ -1,13 +1,17 @@
 package com.neppplus.finalproject_python_userapp_202201
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.neppplus.finalproject_python_userapp_202201.adapters.ProductAdapter
 import com.neppplus.finalproject_python_userapp_202201.adapters.SmallCategorySpinnerAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewCategoryDetailBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.LargeCategoryData
+import com.neppplus.finalproject_python_userapp_202201.models.ProductData
 import com.neppplus.finalproject_python_userapp_202201.models.SmallCategoryData
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +24,11 @@ class ViewCategoryDetailActivity : BaseActivity() {
     lateinit var mLargeCategoryData: LargeCategoryData
 
     val mSmallCategoryList = ArrayList<SmallCategoryData>()
-    lateinit var mAdapter: SmallCategorySpinnerAdapter
+    lateinit var mSmallCategorySpinnerAdapter: SmallCategorySpinnerAdapter
+
+    val mProductList = ArrayList<ProductData>()
+    lateinit var mProductsAdapter: ProductAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +39,43 @@ class ViewCategoryDetailActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        binding.smallCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                val selectedSmallCategoryData = mSmallCategoryList[position]
+
+                apiList.getRequestProductsBySmallCategory(
+                    selectedSmallCategoryData.id
+                ).enqueue(object : Callback<BasicResponse> {
+                    override fun onResponse(
+                        call: Call<BasicResponse>,
+                        response: Response<BasicResponse>
+                    ) {
+                        mProductList.clear()
+
+                        if (response.isSuccessful) {
+                            val br = response.body()!!
+                            mProductList.addAll(br.data.products)
+                        }
+                        else {
+
+                        }
+
+                        mProductsAdapter.notifyDataSetChanged()
+                    }
+
+                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                    }
+
+                })
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
+
     }
 
     override fun setValues() {
@@ -38,8 +83,12 @@ class ViewCategoryDetailActivity : BaseActivity() {
 
         setTitle(mLargeCategoryData.name)
 
-        mAdapter = SmallCategorySpinnerAdapter(mContext, mSmallCategoryList)
-        binding.smallCategorySpinner.adapter = mAdapter
+        mSmallCategorySpinnerAdapter = SmallCategorySpinnerAdapter(mContext, mSmallCategoryList)
+        binding.smallCategorySpinner.adapter = mSmallCategorySpinnerAdapter
+
+        mProductsAdapter = ProductAdapter(mContext, mProductList)
+        binding.productRecyclerView.adapter = mProductsAdapter
+        binding.productRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
         getSmallCagetoryList()
     }
@@ -57,7 +106,7 @@ class ViewCategoryDetailActivity : BaseActivity() {
                     mSmallCategoryList.clear()
                     mSmallCategoryList.addAll(br.data.small_categories)
 
-                    mAdapter.notifyDataSetChanged()
+                    mSmallCategorySpinnerAdapter.notifyDataSetChanged()
 
                 }
                 else {
