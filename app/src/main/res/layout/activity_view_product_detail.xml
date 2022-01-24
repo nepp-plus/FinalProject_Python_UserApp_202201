@@ -10,206 +10,276 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:id="@+id/txtProductName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="상품이름"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <com.willy.ratingbar.BaseRatingBar
-                        android:id="@+id/reviewScoreRatingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srb_starWidth="20dp"
-                        app:srb_rating="5"
-                        app:srb_stepSize="0.1"
-                        app:srb_numStars="5"
-                        app:srb_starPadding="3dp"
-                        app:srb_isIndicator="true"
-                        app:srb_starHeight="20dp"/>
-
-                    <TextView
-                        android:id="@+id/txtReviewCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:text="( 959,467 )" />
-
-                </LinearLayout>
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/productThumbnailViewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp" />
-
-                <TextView
-                    android:id="@+id/txtOptionName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="옵션항목이름" />
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:background="@color/dark_gray"
+                android:paddingVertical="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="10dp"
-                    android:background="@drawable/gray_border_box">
+                    android:padding="15dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/txtProductName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="상품이름"
+                        android:textSize="18sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <com.willy.ratingbar.BaseRatingBar
+                            android:id="@+id/reviewScoreRatingBar"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="70dp"
-                                android:layout_height="wrap_content"
-                                android:text="수량" />
-
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/btnMinus"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@drawable/gray_border_button"
-                                android:backgroundTint="@null"
-                                android:padding="0dp"
-                                android:text="-"
-                                android:textColor="@color/dark_gray"
-                                android:textSize="20sp"/>
-
-                            <TextView
-                                android:id="@+id/txtQuantity"
-                                android:gravity="center"
-                                android:background="@drawable/gray_border_box"
-                                android:layout_width="80dp"
-                                android:layout_marginHorizontal="-1dp"
-                                android:layout_height="50dp"
-                                android:text="1" />
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/btnPlus"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@drawable/gray_border_button"
-                                android:backgroundTint="@null"
-                                android:padding="0dp"
-                                android:text="+"
-                                android:textColor="@color/dark_gray"
-                                android:textSize="20sp"/>
-
-
-                        </LinearLayout>
+                            app:srb_starWidth="20dp"
+                            app:srb_rating="5"
+                            app:srb_stepSize="0.1"
+                            app:srb_numStars="5"
+                            app:srb_starPadding="3dp"
+                            app:srb_isIndicator="true"
+                            app:srb_starHeight="20dp"/>
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/light_gray" />
+                            android:id="@+id/txtReviewCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:text="( 959,467 )" />
+
                     </LinearLayout>
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/productThumbnailViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp" />
+                    <TextView
+                        android:id="@+id/txtOptionName"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="옵션항목이름" />
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:background="@drawable/gray_border_box">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="70dp"
-                                android:layout_height="wrap_content"
-                                android:text="상품가" />
-
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="70dp"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:text="수량" />
 
-                                    <TextView
-                                        android:id="@+id/txtSalePercent"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="20%"
-                                        android:textColor="@color/black" />
 
-                                    <TextView
-                                        android:id="@+id/txtOriginalPrice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="5dp"
-                                        android:text="50,000원" />
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/btnMinus"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/gray_border_button"
+                                    android:backgroundTint="@null"
+                                    android:padding="0dp"
+                                    android:text="-"
+                                    android:textColor="@color/dark_gray"
+                                    android:textSize="20sp"/>
 
-                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/txtQuantity"
+                                    android:gravity="center"
+                                    android:background="@drawable/gray_border_box"
+                                    android:layout_width="80dp"
+                                    android:layout_marginHorizontal="-1dp"
+                                    android:layout_height="50dp"
+                                    android:text="1" />
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/btnPlus"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@drawable/gray_border_button"
+                                    android:backgroundTint="@null"
+                                    android:padding="0dp"
+                                    android:text="+"
+                                    android:textColor="@color/dark_gray"
+                                    android:textSize="20sp"/>
 
-                                    <TextView
-                                        android:id="@+id/txtSalePrice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="20sp"
-                                        android:textColor="@color/sale_price_text_color"
-                                        android:text="50,000원" />
 
-                                </LinearLayout>
                             </LinearLayout>
 
-
-
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/light_gray" />
                         </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/light_gray" />
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="상품가" />
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/txtSalePercent"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="20%"
+                                            android:textColor="@color/black" />
+
+                                        <TextView
+                                            android:id="@+id/txtOriginalPrice"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:text="50,000원" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/txtSalePrice"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="20sp"
+                                            android:textColor="@color/sale_price_text_color"
+                                            android:text="50,000원" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/light_gray" />
+                        </LinearLayout>
+
+
                     </LinearLayout>
 
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_marginTop="20dp"
+                    android:padding="15dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:text="상품정보" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/light_gray"
+                        android:layout_marginTop="15dp" />
+
+                    <LinearLayout
+                        android:id="@+id/productDetailImgLinearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+
+
 
             </LinearLayout>
 
         </ScrollView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="@color/light_gray"
+            android:orientation="horizontal">
+
+            <TextView
+                android:background="@drawable/blue_border_button"
+                android:layout_margin="2dp"
+                android:layout_width="0dp"
+                android:text="장바구니 담기"
+                android:gravity="center"
+                android:textColor="@color/blue"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="구매하기 >"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>
