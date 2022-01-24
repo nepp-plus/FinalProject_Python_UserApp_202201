@@ -1,13 +1,15 @@
 package com.neppplus.finalproject_python_userapp_202201.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.neppplus.finalproject_python_userapp_202201.LargeCategoryAdapter
+import com.neppplus.finalproject_python_userapp_202201.adapters.LargeCategoryAdapter
 import com.neppplus.finalproject_python_userapp_202201.R
+import com.neppplus.finalproject_python_userapp_202201.ViewCategoryDetailActivity
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentCategoryBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.LargeCategoryData
@@ -39,11 +41,24 @@ class CategoryFragment : BaseFragment() {
 
     override fun setupEvents() {
 
+        mAdapter = LargeCategoryAdapter(mContext, mCategoryList)
+        mAdapter.setOnItemClick(object : LargeCategoryAdapter.OnItemClick {
+            override fun onItemClick(position: Int) {
+
+                val clickedCategoryData = mCategoryList[position]
+
+                val myIntent = Intent(mContext, ViewCategoryDetailActivity::class.java)
+                myIntent.putExtra("category", clickedCategoryData)
+                startActivity(myIntent)
+
+            }
+
+        })
+
     }
 
     override fun setValues() {
 
-        mAdapter = LargeCategoryAdapter(mContext, mCategoryList)
         binding.largeCategoryRecyclerView.adapter = mAdapter
         binding.largeCategoryRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
