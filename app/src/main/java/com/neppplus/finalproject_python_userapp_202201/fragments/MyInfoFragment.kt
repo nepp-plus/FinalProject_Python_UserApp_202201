@@ -14,6 +14,7 @@ import com.neppplus.finalproject_python_userapp_202201.SplashActivity
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentHomeBinding
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentMyInfoBinding
 import com.neppplus.finalproject_python_userapp_202201.utils.ContextUtil
+import com.neppplus.finalproject_python_userapp_202201.utils.GlobalData
 
 class MyInfoFragment : BaseFragment() {
 
@@ -48,6 +49,8 @@ class MyInfoFragment : BaseFragment() {
                     myIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(myIntent)
 
+                    GlobalData.loginUser = null
+
                 })
                 .setNegativeButton("취소", null)
 
@@ -58,6 +61,8 @@ class MyInfoFragment : BaseFragment() {
     }
 
     override fun setValues() {
+
+        binding.txtUserName.text = GlobalData.loginUser!!.name
 
     }
 
