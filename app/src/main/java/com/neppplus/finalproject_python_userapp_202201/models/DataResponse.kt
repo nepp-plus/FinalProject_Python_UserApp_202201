@@ -9,5 +9,6 @@ class DataResponse(
     val token: String,
 
     val large_categories: List<LargeCategoryData>,
+    val small_categories: List<SmallCategoryData>,
 ) {
 }

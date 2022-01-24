@@ -35,4 +35,10 @@ interface ServerAPIInterface {
     fun getRequestMyInfo(
 
     ): Call<BasicResponse>
+
+
+    @GET("/largecategory/{large_category_id}/smallcategory")
+    fun getRequestSmallCategory(
+        @Path("large_category_id") id: Int,
+    ): Call<BasicResponse>
 }
