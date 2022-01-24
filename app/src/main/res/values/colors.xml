@@ -10,5 +10,6 @@
     <color name="blue">#0074e9</color>
     <color name="light_gray">#DFDFDF</color>
     <color name="dark_gray">#A0A0A0</color>
+    <color name="gray">#C0C0C0</color>
     <color name="sale_price_text_color">#ae0000</color>
 </resources>
