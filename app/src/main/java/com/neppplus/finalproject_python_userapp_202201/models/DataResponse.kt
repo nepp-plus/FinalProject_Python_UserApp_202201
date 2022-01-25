@@ -14,5 +14,8 @@ class DataResponse(
     val products: List<ProductData>,
     val carts: List<CartData>,
 
+
+    val user_all_address: List<ShipmentInfoData>,
+
 ) {
 }

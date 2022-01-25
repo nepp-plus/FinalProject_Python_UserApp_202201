@@ -1,7 +1,10 @@
 package com.neppplus.finalproject_python_userapp_202201
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.iamport.sdk.data.sdk.IamPortRequest
 import com.iamport.sdk.data.sdk.PayMethod
@@ -21,6 +24,23 @@ class PurchaseActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+
+        val resultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            ActivityResultCallback {
+                if (it.resultCode == RESULT_OK) {
+                    val dataIntent = it.data!!
+                }
+            }
+        )
+
+        binding.btnShipmentSelect.setOnClickListener {
+
+
+            val myIntent = Intent(mContext, ShipmentInfoListActivity::class.java)
+            resultLauncher.launch(myIntent)
+        }
 
         binding.btnPay.setOnClickListener {
 

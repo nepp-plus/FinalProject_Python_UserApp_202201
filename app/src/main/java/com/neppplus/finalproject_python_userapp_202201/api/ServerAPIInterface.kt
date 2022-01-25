@@ -64,4 +64,8 @@ interface ServerAPIInterface {
         @Query("product_id") productId: Int,
     ): Call<BasicResponse>
 
+    @GET("/shipmentinfo")
+    fun getRequestShimentInfoList(
+    ): Call<BasicResponse>
+
 }
