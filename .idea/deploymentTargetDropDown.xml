@@ -6,12 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="SERIAL_NUMBER" />
-            <value value="ce10171a4405663204" />
+            <type value="VIRTUAL_DEVICE_PATH" />
+            <value value="C:\Users\NePPPlus_Teacher_01\.android\avd\KJ_Test_Device.avd" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-01-25T08:27:43.625056400Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-01-25T09:14:07.818915900Z" />
   </component>
 </project>

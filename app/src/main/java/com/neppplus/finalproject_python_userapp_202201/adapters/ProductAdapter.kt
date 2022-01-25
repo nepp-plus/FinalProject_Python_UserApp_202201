@@ -56,6 +56,10 @@ class ProductAdapter(
 
             txtSalePercent.text = "${salePercent}%"
 
+            if (data.product_main_images.isNotEmpty()) {
+                Glide.with(mContext).load(data.product_main_images[0].image_url).into(imgProductThumbnail)
+            }
+
             if (oic != null) {
                 view.setOnClickListener {
                     oic!!.onItemClick(position)

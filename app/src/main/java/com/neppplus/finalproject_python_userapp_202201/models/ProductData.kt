@@ -9,7 +9,8 @@ class ProductData(
     val name: String,
     val original_price: Int,
     val sale_price: Int,
-    val product_detail_images: List<ProductImageData>
+    val product_detail_images: List<ProductImageData>,
+    val product_main_images: List<ProductImageData>,
 
 ): Serializable {
 }

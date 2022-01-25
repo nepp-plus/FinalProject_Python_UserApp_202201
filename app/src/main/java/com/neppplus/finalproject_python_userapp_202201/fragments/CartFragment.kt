@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.neppplus.finalproject_python_userapp_202201.PurchaseActivity
 import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentCartBinding
@@ -192,12 +193,16 @@ class CartFragment : BaseFragment() {
         val txtItemTotalPrice = row.findViewById<TextView>(R.id.txtItemTotalPrice)
         val btnDelete = row.findViewById<Button>(R.id.btnDelete)
         val cartCountSpinner = row.findViewById<Spinner>(R.id.cartCountSpinner)
+        val imgProductThumbnail = row.findViewById<ImageView>(R.id.imgProductThumbnail)
 
         productCheckBox.text = data.product_info.name
         txtSalePrice.text = NumberFormat.getNumberInstance().format(data.product_info.sale_price)
 
         cartCountSpinner.setSelection(data.quantity - 1)
 
+        if (data.product_info.product_main_images.isNotEmpty()) {
+            Glide.with(mContext).load(data.product_info.product_main_images[0].image_url).into(imgProductThumbnail)
+        }
 
         fun getItemTotalPrice() : Int {
 
