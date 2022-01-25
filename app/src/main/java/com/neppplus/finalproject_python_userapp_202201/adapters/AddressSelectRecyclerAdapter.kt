@@ -26,14 +26,17 @@ class AddressSelectRecyclerAdapter(val mContext:Context, val mList: List<Address
 
     inner class  PlaceViewHolder(val row: View) : RecyclerView.ViewHolder(row) {
 
-//        멤버변수 - list_item 내부의 UI
-        val txtPlaceName = row.findViewById<TextView>(R.id.txtPlaceName)
+        val txtRoadAddress = row.findViewById<TextView>(R.id.txtRoadAddress)
+        val txtOldAddress = row.findViewById<TextView>(R.id.txtOldAddress)
+        val txtZipCode = row.findViewById<TextView>(R.id.txtZipCode)
 
 //        함수 - 실제 데이터 연동 bind
 
         fun bind( data: AddressData ) {
 
-            txtPlaceName.text =  data.placeName
+            txtRoadAddress.text = data.roadAddress
+            txtOldAddress.text = data.oldAddress
+            txtZipCode.text = "[${data.zipCode}]"
 
 //            한 줄이 눌리면 할일
             row.setOnClickListener {

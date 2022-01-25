@@ -4,11 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 class AddressData(
 
-    var id: Int,
-    @SerializedName("name")
-    var placeName: String,
-    var latitude: Double,
-    var longitude: Double,
+    var oldAddress: String,
+    var roadAddress: String,
+    var zipCode: String,
 
 ) {
+
+    constructor() : this("", "", "")
+
 }
