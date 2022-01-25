@@ -17,6 +17,33 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/shipmentInfoEmptyLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@drawable/gray_gradient_round_box"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="기본 배송지가 없습니다."
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+
+                    <Button
+                        android:id="@+id/btnAddShipmentInfo"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="배송지 등록하기" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/btnShipmentSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

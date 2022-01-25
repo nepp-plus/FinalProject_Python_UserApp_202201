@@ -1,5 +1,6 @@
 package com.neppplus.finalproject_python_userapp_202201
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -28,11 +29,25 @@ class ShipmentInfoListActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        mAdapter = ShipmentInfoAdapter(mContext, mShipmentInfoList)
+        mAdapter.setOnItemClick(object : ShipmentInfoAdapter.OnItemClick {
+            override fun onItemClick(position: Int) {
+
+                val clickedShipmentInfo = mShipmentInfoList[position]
+
+                val resultIntent = Intent()
+                resultIntent.putExtra("shipment", clickedShipmentInfo)
+                setResult(RESULT_OK, resultIntent)
+                finish()
+
+            }
+
+        })
+
     }
 
     override fun setValues() {
 
-        mAdapter = ShipmentInfoAdapter(mContext, mShipmentInfoList)
         binding.shipmentInfoRecyclerView.adapter = mAdapter
         binding.shipmentInfoRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
