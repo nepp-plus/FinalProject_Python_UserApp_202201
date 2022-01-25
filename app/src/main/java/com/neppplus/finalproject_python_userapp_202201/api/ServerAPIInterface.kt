@@ -57,7 +57,11 @@ interface ServerAPIInterface {
 
     @GET("/cart")
     fun getRequestMyCart(
+    ): Call<BasicResponse>
 
+    @DELETE("/cart")
+    fun deleteRequestCart(
+        @Query("product_id") productId: Int,
     ): Call<BasicResponse>
 
 }

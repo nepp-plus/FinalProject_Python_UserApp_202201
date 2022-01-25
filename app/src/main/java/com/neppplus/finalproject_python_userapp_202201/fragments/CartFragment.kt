@@ -1,11 +1,15 @@
 package com.neppplus.finalproject_python_userapp_202201.fragments
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.neppplus.finalproject_python_userapp_202201.PurchaseActivity
 import com.neppplus.finalproject_python_userapp_202201.R
@@ -117,7 +121,11 @@ class CartFragment : BaseFragment() {
 
                         }
 
-                        binding.selectAllCheckBox.isChecked = true
+                        val myHandler = Handler(Looper.getMainLooper())
+                        myHandler.postDelayed({
+                            binding.selectAllCheckBox.isChecked = true
+                        }, 200)
+
 
                     }
 
@@ -221,6 +229,38 @@ class CartFragment : BaseFragment() {
 
         }
 
+        btnDelete.setOnClickListener {
+
+            val alert = AlertDialog.Builder(mContext)
+            alert.setTitle("장바구니 삭제")
+            alert.setMessage("정말 삭제 하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+
+                apiService.deleteRequestCart(
+                    data.id
+                ).enqueue(object : Callback<BasicResponse> {
+                    override fun onResponse(
+                        call: Call<BasicResponse>,
+                        response: Response<BasicResponse>
+                    ) {
+
+                        if (response.isSuccessful) {
+                            Toast.makeText(mContext, "장바구니에서 삭제했습니다.", Toast.LENGTH_SHORT).show()
+                            getMyCartListFromServer()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                    }
+
+                })
+
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
+
+        }
 
         return row
     }
