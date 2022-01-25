@@ -3,7 +3,9 @@ package com.neppplus.finalproject_python_userapp_202201
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
@@ -23,15 +25,25 @@ class PurchaseActivity : BaseActivity() {
 
     var mSelectedShipmentInfo : ShipmentInfoData? = null
 
+    lateinit var mBuyProductIds : ArrayList<Int>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_purchase)
         Iamport.init(this)
+        mBuyProductIds = intent.getIntegerArrayListExtra("buyProductIds") as ArrayList<Int>
+        Log.d("구매할상품들", mBuyProductIds.toString())
         setupEvents()
         setValues()
     }
 
     override fun setupEvents() {
+
+        binding.btnAddShipmentInfo.setOnClickListener {
+
+            val myIntent = Intent(mContext, EditShipmentInfoActivity::class.java)
+            startActivity(myIntent)
+        }
 
 
         val resultLauncher = registerForActivityResult(
@@ -54,6 +66,11 @@ class PurchaseActivity : BaseActivity() {
 
         binding.btnPay.setOnClickListener {
 
+            if (mSelectedShipmentInfo == null) {
+                Toast.makeText(mContext, "선택된 배송지가 없습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val request = IamPortRequest(
                 pg = "nice",                                 // PG 사
                 pay_method = PayMethod.card.name,          // 결제수단
@@ -64,6 +81,9 @@ class PurchaseActivity : BaseActivity() {
             )
             Iamport.payment("imp16646577", iamPortRequest = request,
                 approveCallback = {
+
+//                  결제 성공시 -> [ {'product_id':3 , 'quantity': 10} , {'product_id':5 , 'quantity': 2}, {'product_id':8 , 'quantity': 1} ] 문구 전송
+
 
                 },
                 paymentResultCallback = {

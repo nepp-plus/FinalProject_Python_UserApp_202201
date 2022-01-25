@@ -73,7 +73,13 @@ class CartFragment : BaseFragment() {
         }
         binding.btnBuy.setOnClickListener {
 
-            val buyProductIds = arrayOf(1,2,3)
+            val buyProductIds = ArrayList<Int>()
+
+            for (cartData in mCartList) {
+                if (cartData.isBuy) {
+                    buyProductIds.add(cartData.product_id)
+                }
+            }
 
             val myIntent = Intent(mContext, PurchaseActivity::class.java)
             myIntent.putExtra("buyProductIds", buyProductIds)
