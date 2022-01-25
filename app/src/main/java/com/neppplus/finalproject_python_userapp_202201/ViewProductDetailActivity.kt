@@ -2,13 +2,11 @@ package com.neppplus.finalproject_python_userapp_202201
 
 import android.content.Intent
 import android.graphics.Paint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewProductDetailBinding
@@ -39,7 +37,7 @@ class ViewProductDetailActivity : BaseActivity() {
 
         binding.btnCart.setOnClickListener {
 
-            apiList.postRequestCart(
+            apiService.postRequestCart(
                 mProduct.id,
                 buyQuantity,
             ).enqueue(object : Callback<BasicResponse> {

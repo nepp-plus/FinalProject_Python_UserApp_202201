@@ -65,7 +65,7 @@ class SignUpActivity : BaseActivity() {
             }
 
 
-            apiList.putRequestSignUp(
+            apiService.putRequestSignUp(
                 inputEmail,
                 inputPw,
                 inputName,

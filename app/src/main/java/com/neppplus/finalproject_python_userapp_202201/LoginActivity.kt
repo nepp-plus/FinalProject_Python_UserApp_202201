@@ -1,7 +1,6 @@
 package com.neppplus.finalproject_python_userapp_202201
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -32,7 +31,7 @@ class LoginActivity : BaseActivity() {
             val inputEmail = binding.edtEmail.text.toString()
             val inputPw = binding.edtPassword.text.toString()
 
-            apiList.postRequestLogin(
+            apiService.postRequestLogin(
                 inputEmail,
                 inputPw,
             ).enqueue(object : Callback<BasicResponse> {

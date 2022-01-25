@@ -57,7 +57,7 @@ class ViewCategoryDetailActivity : BaseActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 val selectedSmallCategoryData = mSmallCategoryList[position]
 
-                apiList.getRequestProductsBySmallCategory(
+                apiService.getRequestProductsBySmallCategory(
                     selectedSmallCategoryData.id
                 ).enqueue(object : Callback<BasicResponse> {
                     override fun onResponse(
@@ -107,7 +107,7 @@ class ViewCategoryDetailActivity : BaseActivity() {
     }
 
     private fun getSmallCagetoryList() {
-        apiList.getRequestSmallCategory(
+        apiService.getRequestSmallCategory(
             mLargeCategoryData.id,
         ).enqueue(object : Callback<BasicResponse> {
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {

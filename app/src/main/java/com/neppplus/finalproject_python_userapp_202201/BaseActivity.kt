@@ -2,8 +2,6 @@ package com.neppplus.finalproject_python_userapp_202201
 
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +13,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var mContext: Context
 
-    lateinit var apiList: ServerAPIInterface
+    lateinit var apiService: ServerAPIInterface
 
 
     lateinit var txtTitle: TextView
@@ -25,7 +23,7 @@ abstract class BaseActivity : AppCompatActivity() {
         mContext = this
 
         val retrofit = ServerAPI.getRetrofit(mContext)
-        apiList = retrofit.create(ServerAPIInterface::class.java)
+        apiService = retrofit.create(ServerAPIInterface::class.java)
 
 
         supportActionBar?.let {
