@@ -89,14 +89,22 @@ class ViewProductDetailActivity : BaseActivity() {
         }
 
         binding.btnPlus.setOnClickListener {
-            buyQuantity += 1
-            setQuantityAndPriceTxt()
+            if (buyQuantity < 5) {
+                buyQuantity += 1
+                setQuantityAndPriceTxt()   
+            }
+            else {
+                Toast.makeText(mContext, "최대 5개까지만 가능합니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.btnMinus.setOnClickListener {
             if (buyQuantity > 1) {
                 buyQuantity -= 1
                 setQuantityAndPriceTxt()
+            }
+            else {
+                Toast.makeText(mContext, "최소 1개 이상은 구매해야 합니다.", Toast.LENGTH_SHORT).show()
             }
         }
 

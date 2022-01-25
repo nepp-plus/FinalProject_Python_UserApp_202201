@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.neppplus.finalproject_python_userapp_202201.PurchaseActivity
@@ -13,9 +17,11 @@ import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentCartB
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentHomeBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.CartData
+import com.neppplus.finalproject_python_userapp_202201.utils.WonFormatUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
 
 class CartFragment : BaseFragment() {
 
@@ -101,6 +107,19 @@ class CartFragment : BaseFragment() {
 
     fun makeCartRow(data: CartData) : View {
         val row = LayoutInflater.from(mContext).inflate(R.layout.cart_list_item, null)
+
+        val productCheckBox = row.findViewById<CheckBox>(R.id.productCheckBox)
+        val txtSalePrice = row.findViewById<TextView>(R.id.txtSalePrice)
+        val btnDelete = row.findViewById<Button>(R.id.btnDelete)
+        val cartCountSpinner = row.findViewById<Spinner>(R.id.cartCountSpinner)
+
+        productCheckBox.text = data.product_info.name
+        txtSalePrice.text = NumberFormat.getNumberInstance().format(data.product_info.sale_price)
+
+        cartCountSpinner.setSelection(data.quantity - 1)
+
+
+
         return row
     }
 
