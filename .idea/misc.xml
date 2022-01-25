@@ -17,6 +17,7 @@
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/activity_splash.xml" value="0.2046875" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/activity_view_category_detail.xml" value="0.2046875" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/activity_view_product_detail.xml" value="0.5" />
+        <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/address_list_item.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/cart_list_item.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/custom_action_bar.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
@@ -25,6 +26,7 @@
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/fragment_home.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/fragment_my_info.xml" value="0.33" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/large_category_list_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/my_custom_alert_select_address.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/product_list_item.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/shipment_info_list_item.xml" value="0.33" />
         <entry key="..\:/Users/NePPPlus_Teacher_01/AndroidStudioProjects/FinalProject_Python_UserApp_202201/app/src/main/res/layout/small_category_spinner_list_item.xml" value="0.2046875" />

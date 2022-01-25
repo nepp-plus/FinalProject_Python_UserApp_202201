@@ -28,7 +28,7 @@
             android:layout_marginTop="10dp"/>
 
         <LinearLayout
-            android:id="@+id/btnSearch"
+            android:id="@+id/btnSearchAddress"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
