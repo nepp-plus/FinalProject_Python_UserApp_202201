@@ -79,9 +79,15 @@ class PurchaseActivity : BaseActivity() {
 
         setTitle("주문 / 결제")
 
-        getMyShipmentInfoList()
-
     }
+
+    override fun onResume() {
+        super.onResume()
+
+
+        getMyShipmentInfoList()
+    }
+
     private fun getMyShipmentInfoList() {
         apiService.getRequestShimentInfoList().enqueue(object : Callback<BasicResponse> {
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
@@ -107,6 +113,8 @@ class PurchaseActivity : BaseActivity() {
                 }
                 else {
 
+                    binding.shipmentInfoEmptyLayout.visibility = View.VISIBLE
+                    binding.btnShipmentSelect.visibility = View.GONE
                 }
 
             }

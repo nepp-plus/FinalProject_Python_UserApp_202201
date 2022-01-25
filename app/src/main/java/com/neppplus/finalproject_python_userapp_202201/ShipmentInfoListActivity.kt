@@ -3,6 +3,7 @@ package com.neppplus.finalproject_python_userapp_202201
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neppplus.finalproject_python_userapp_202201.adapters.ShipmentInfoAdapter
@@ -44,12 +45,20 @@ class ShipmentInfoListActivity : BaseActivity() {
 
         })
 
+
+        btnAdd.setOnClickListener {
+            val myIntent = Intent(mContext, EditShipmentInfoActivity::class.java)
+            startActivity(myIntent)
+        }
+
     }
 
     override fun setValues() {
 
         binding.shipmentInfoRecyclerView.adapter = mAdapter
         binding.shipmentInfoRecyclerView.layoutManager = LinearLayoutManager(mContext)
+
+        btnAdd.visibility = View.VISIBLE
 
     }
 

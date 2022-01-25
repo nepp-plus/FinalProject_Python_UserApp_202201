@@ -2,6 +2,7 @@ package com.neppplus.finalproject_python_userapp_202201
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
     lateinit var txtTitle: TextView
+    lateinit var btnAdd : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val customBar = defaultActionBar.customView
 
         txtTitle = customBar.findViewById(R.id.txtTitle)
+        btnAdd = customBar.findViewById(R.id.btnAdd)
 
     }
 
