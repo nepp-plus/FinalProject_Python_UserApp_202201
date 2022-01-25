@@ -7,8 +7,9 @@ class CartData(
     val id: Int,
     val product_id: Int,
     val user_id: Int,
-    val quantity: Int,
+    var quantity: Int,
     val product_info: ProductData,
+    var isBuy: Boolean = false,
 
 ): Serializable {
 }
