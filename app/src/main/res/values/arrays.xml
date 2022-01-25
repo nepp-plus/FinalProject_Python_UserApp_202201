@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="shipment_options">
+
+        <item>문 앞</item>
+        <item>직접 받고 부재시 문 앞</item>
+        <item>경비실</item>
+        <item>택배함</item>
+        <item>기타사항</item>
+
+    </string-array>
+</resources>

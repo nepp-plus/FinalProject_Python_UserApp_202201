@@ -1,11 +1,13 @@
 package com.neppplus.finalproject_python_userapp_202201.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.neppplus.finalproject_python_userapp_202201.PurchaseActivity
 import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentCartBinding
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentHomeBinding
@@ -35,7 +37,15 @@ class CartFragment : BaseFragment() {
     }
 
     override fun setupEvents() {
+        binding.btnBuy.setOnClickListener {
 
+            val buyProductIds = arrayOf(1,2,3)
+
+            val myIntent = Intent(mContext, PurchaseActivity::class.java)
+            myIntent.putExtra("buyProductIds", buyProductIds)
+            startActivity(myIntent)
+
+        }
     }
 
     override fun setValues() {
