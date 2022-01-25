@@ -1,21 +1,25 @@
 package com.neppplus.finalproject_python_userapp_202201
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neppplus.finalproject_python_userapp_202201.adapters.AddressSelectRecyclerAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityEditShipmentInfoBinding
 import com.neppplus.finalproject_python_userapp_202201.models.AddressData
+import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.ShipmentInfoData
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -26,6 +30,8 @@ class EditShipmentInfoActivity : BaseActivity() {
 
     lateinit var binding: ActivityEditShipmentInfoBinding
 
+    var mSelectedAddressData : AddressData? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_shipment_info)
@@ -34,14 +40,71 @@ class EditShipmentInfoActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        val resultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
-            ActivityResultCallback {
-                if (it.resultCode == RESULT_OK) {
-                    val dataIntent = it.data!!
+
+        binding.btnSave.setOnClickListener {
+
+            val alert = AlertDialog.Builder(mContext)
+            alert.setTitle("배송지 저장")
+            alert.setMessage("정말 배송지를 저장 하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+
+                val inputName = binding.edtReceiverName.text.toString()
+                if (inputName.length < 2) {
+                    Toast.makeText(mContext, "이름은 최소 2자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+                    return@OnClickListener
                 }
-            }
-        )
+
+                if (mSelectedAddressData == null) {
+                    Toast.makeText(mContext, "배송지 주소를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
+
+                val inputAddress1 = binding.txtAddress1.text.toString()
+                val inputAddress2 = binding.edtAddress2.text.toString()
+
+                val inputPhone = binding.edtPhone.text.toString()
+
+                if (inputPhone.length < 5) {
+                    Toast.makeText(mContext, "연락처는 최소 5자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
+
+                val isBasicShipmentInfo = binding.basicAddressCheckBox.isChecked
+
+                val addressData = mSelectedAddressData!!
+                apiService.postRequestAddShipmentInfo(
+                    inputName,
+                    inputPhone,
+                    addressData.zipCode,
+                    inputAddress1,
+                    inputAddress2,
+                    isBasicShipmentInfo,
+                    ""
+
+                ).enqueue(object : retrofit2.Callback<BasicResponse> {
+                    override fun onResponse(
+                        call: retrofit2.Call<BasicResponse>,
+                        response: retrofit2.Response<BasicResponse>
+                    ) {
+
+                        if (response.isSuccessful) {
+                            Toast.makeText(mContext, "배송지 저장에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+
+                    }
+
+                    override fun onFailure(call: retrofit2.Call<BasicResponse>, t: Throwable) {
+
+                    }
+
+                })
+
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
+
+        }
 
         binding.btnSearchAddress.setOnClickListener {
 
@@ -104,6 +167,11 @@ class EditShipmentInfoActivity : BaseActivity() {
                                 val roadAddressObj = documentObj.getJSONObject("road_address")
 
                                 addressData.roadAddress = roadAddressObj.getString("address_name")
+
+                                if (roadAddressObj.getString("building_name") != "") {
+                                    addressData.roadAddress += (" " + roadAddressObj.getString("building_name"))
+                                }
+
                                 addressData.zipCode = roadAddressObj.getString("zone_no")
 
                                 if (addressData.zipCode != "") {
@@ -136,6 +204,11 @@ class EditShipmentInfoActivity : BaseActivity() {
 
             addressAdapter.onItemClickListener = object : AddressSelectRecyclerAdapter.OnItemClickListener {
                 override fun onItemClick(data: AddressData) {
+
+                    mSelectedAddressData = data
+                    binding.address2Layout.visibility = View.VISIBLE
+                    binding.txtAddress1.text = data.roadAddress
+                    binding.txtAddress1.setTextColor(ContextCompat.getColor(mContext, R.color.black))
 
                     dialog.dismiss()
                 }
