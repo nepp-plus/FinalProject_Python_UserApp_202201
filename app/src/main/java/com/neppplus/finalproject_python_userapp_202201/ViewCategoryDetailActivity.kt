@@ -2,6 +2,7 @@ package com.neppplus.finalproject_python_userapp_202201
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -34,6 +35,7 @@ class ViewCategoryDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_category_detail)
+        mLargeCategoryData = intent.getSerializableExtra("category") as LargeCategoryData
         setupEvents()
         setValues()
     }
@@ -58,7 +60,8 @@ class ViewCategoryDetailActivity : BaseActivity() {
                 val selectedSmallCategoryData = mSmallCategoryList[position]
 
                 apiService.getRequestProductsBySmallCategory(
-                    selectedSmallCategoryData.id
+                    selectedSmallCategoryData.id,
+                    mLargeCategoryData.id,
                 ).enqueue(object : Callback<BasicResponse> {
                     override fun onResponse(
                         call: Call<BasicResponse>,
@@ -93,8 +96,6 @@ class ViewCategoryDetailActivity : BaseActivity() {
     }
 
     override fun setValues() {
-        mLargeCategoryData = intent.getSerializableExtra("category") as LargeCategoryData
-
         setTitle(mLargeCategoryData.name)
 
         mSmallCategorySpinnerAdapter = SmallCategorySpinnerAdapter(mContext, mSmallCategoryList)

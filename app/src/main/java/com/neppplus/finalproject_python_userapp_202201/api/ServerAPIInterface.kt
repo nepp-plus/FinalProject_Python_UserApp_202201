@@ -1,6 +1,7 @@
 package com.neppplus.finalproject_python_userapp_202201.api
 
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
+import com.neppplus.finalproject_python_userapp_202201.models.LargeCategoryData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -45,6 +46,7 @@ interface ServerAPIInterface {
     @GET("/smallcategory/{small_category_id}/product")
     fun getRequestProductsBySmallCategory(
         @Path("small_category_id") id: Int,
+        @Query("large_category_id") largeCategoryId: Int,
     ): Call<BasicResponse>
 
 

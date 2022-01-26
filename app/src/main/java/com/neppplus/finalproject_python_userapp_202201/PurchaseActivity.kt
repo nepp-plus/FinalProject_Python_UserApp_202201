@@ -202,13 +202,16 @@ class PurchaseActivity : BaseActivity() {
 
         setTitle("주문 / 결제")
 
+
     }
 
     override fun onResume() {
         super.onResume()
+        if (mSelectedShipmentInfo == null) {
 
+            getMyShipmentInfoList()
 
-        getMyShipmentInfoList()
+        }
     }
 
     private fun getMyShipmentInfoList() {
@@ -216,23 +219,21 @@ class PurchaseActivity : BaseActivity() {
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
 
                 if (response.isSuccessful) {
-                    var isBasicAddressMade = false
-                    response.body()!!.data.user_all_address.forEach {
-                        if (it.is_basic_address) {
-                            mSelectedShipmentInfo = it
+                    val br = response.body()!!
+
+                    if (mSelectedShipmentInfo == null) {
+                        if (br.data.basic_address == null) {
+                            binding.shipmentInfoEmptyLayout.visibility = View.VISIBLE
+                            binding.btnShipmentSelect.visibility = View.GONE
+                        }
+                        else {
+                            mSelectedShipmentInfo = br.data.basic_address
                             setSelectedShipmentInfoToUi()
-                            isBasicAddressMade = true
+                            binding.shipmentInfoEmptyLayout.visibility = View.GONE
+                            binding.btnShipmentSelect.visibility = View.VISIBLE
                         }
                     }
 
-                    if (!isBasicAddressMade) {
-                        binding.shipmentInfoEmptyLayout.visibility = View.VISIBLE
-                        binding.btnShipmentSelect.visibility = View.GONE
-                    }
-                    else {
-                        binding.shipmentInfoEmptyLayout.visibility = View.GONE
-                        binding.btnShipmentSelect.visibility = View.VISIBLE
-                    }
                 }
                 else {
 
