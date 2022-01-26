@@ -81,4 +81,19 @@ interface ServerAPIInterface {
 
     ): Call<BasicResponse>
 
+
+    @FormUrlEncoded
+    @POST("/order")
+    fun postRequestOrder(
+        @Field("receiver_name") receiverName: String,
+        @Field("address") address: String,
+        @Field("zip_code") zipCode: String,
+        @Field("phone_num") phoneNum: String,
+        @Field("request_message") request_message: String,
+        @Field("payment_uid") paymentUid: String,
+        @Field("merchant_uid") merchantUid: String,
+        @Field("item_list") itemListJsonStr: String,
+
+        ): Call<BasicResponse>
+
 }

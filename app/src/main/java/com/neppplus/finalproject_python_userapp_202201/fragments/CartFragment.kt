@@ -17,6 +17,8 @@ import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentCartBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.CartData
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,16 +76,20 @@ class CartFragment : BaseFragment() {
         }
         binding.btnBuy.setOnClickListener {
 
-            val buyProductIds = ArrayList<Int>()
-
+            val buyCartListJsonArr = JSONArray()
             for (cartData in mCartList) {
                 if (cartData.isBuy) {
-                    buyProductIds.add(cartData.product_id)
+                    val cartJson = JSONObject()
+                    cartJson.put("product_id", cartData.id)
+                    cartJson.put("quantity", cartData.quantity)
+                    cartJson.put("sale_price", cartData.product_info.sale_price)
+
+                    buyCartListJsonArr.put(cartJson)
                 }
             }
 
             val myIntent = Intent(mContext, PurchaseActivity::class.java)
-            myIntent.putExtra("buyProductIds", buyProductIds)
+            myIntent.putExtra("buyInfoJson", buyCartListJsonArr.toString())
             startActivity(myIntent)
 
         }
@@ -229,7 +235,8 @@ class CartFragment : BaseFragment() {
         }
 
         cartCountSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                data.quantity = position + 1
                 txtItemTotalPrice.text = NumberFormat.getNumberInstance().format(getItemTotalPrice())
                 calculateTotalPrice()
             }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,9 +16,15 @@ import com.iamport.sdk.domain.core.Iamport
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityPurchaseBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.ShipmentInfoData
+import com.neppplus.finalproject_python_userapp_202201.utils.GlobalData
+import okhttp3.internal.and
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.StringBuilder
+import java.security.MessageDigest
+import java.util.*
 
 class PurchaseActivity : BaseActivity() {
 
@@ -25,19 +32,37 @@ class PurchaseActivity : BaseActivity() {
 
     var mSelectedShipmentInfo : ShipmentInfoData? = null
 
-    lateinit var mBuyProductIds : ArrayList<Int>
+    var mBuyProductJsonStr = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_purchase)
         Iamport.init(this)
-        mBuyProductIds = intent.getIntegerArrayListExtra("buyProductIds") as ArrayList<Int>
-        Log.d("구매할상품들", mBuyProductIds.toString())
+        mBuyProductJsonStr = intent.getStringExtra("buyInfoJson").toString()
+        Log.d("구매할상품들", mBuyProductJsonStr)
         setupEvents()
         setValues()
     }
 
     override fun setupEvents() {
+
+        binding.shipmentOptionsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+
+                binding.edtShipmentOptions.visibility = if (position == 4) {
+                    View.VISIBLE
+                }
+                else {
+                    View.GONE
+                }
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
 
         binding.btnAddShipmentInfo.setOnClickListener {
 
@@ -71,26 +96,76 @@ class PurchaseActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            val request = IamPortRequest(
-                pg = "nice",                                 // PG 사
-                pay_method = PayMethod.card.name,          // 결제수단
-                name = "여기주문이요",                         // 주문명
-                merchant_uid = "mid_123456",               // 주문번호
-                amount = "3000",                           // 결제금액
-                buyer_name = "홍길동"
-            )
-            Iamport.payment("imp16646577", iamPortRequest = request,
-                approveCallback = {
+            val shipmentOption = if (binding.shipmentOptionsSpinner.selectedItemPosition == 4) {
+                binding.edtShipmentOptions.text.toString()
+            }
+            else {
+                binding.shipmentOptionsSpinner.selectedItem.toString()
+            }
 
-//                  결제 성공시 -> [ {'product_id':3 , 'quantity': 10} , {'product_id':5 , 'quantity': 2}, {'product_id':8 , 'quantity': 1} ] 문구 전송
+            val userEmail = GlobalData.loginUser!!.email
+            val now = Date().time
 
+            val shipmentInfo = mSelectedShipmentInfo!!
+            apiService.postRequestOrder(
+                shipmentInfo.name,
+                "${shipmentInfo.address1} ${shipmentInfo.address2}",
+                shipmentInfo.zipcode,
+                shipmentInfo.phone,
+                shipmentOption,
+                "testimpuid1234",
+                "${userEmail}_${now}",
+                mBuyProductJsonStr
 
-                },
-                paymentResultCallback = {
+            ).enqueue(object : Callback<BasicResponse> {
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
 
+                    if (response.isSuccessful) {
+
+                        Toast.makeText(mContext, "구매가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+
+                    }
+                    else {
+
+                        Toast.makeText(mContext, "구매에 실패했습니다.", Toast.LENGTH_SHORT).show()
+
+                        val jsonObj = JSONObject(response.errorBody()!!.string())
+                        Log.d("구매완료에러", jsonObj.toString())
+
+                    }
 
                 }
-            )
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                }
+
+            })
+
+
+//            val request = IamPortRequest(
+//                pg = "nice",                                 // PG 사
+//                pay_method = PayMethod.card.name,          // 결제수단
+//                name = "여기주문이요",                         // 주문명
+//                merchant_uid = "mid_123456",               // 주문번호
+//                amount = "3000",                           // 결제금액
+//                buyer_name = "홍길동"
+//            )
+//            Iamport.payment("imp16646577", iamPortRequest = request,
+//                approveCallback = {
+//
+////                  결제 성공시 -> [ {'product_id':3 , 'quantity': 10} , {'product_id':5 , 'quantity': 2}, {'product_id':8 , 'quantity': 1} ] 문구 전송
+//
+//
+//                },
+//                paymentResultCallback = {
+//
+//
+//                }
+//            )
         }
 
     }
@@ -159,5 +234,14 @@ class PurchaseActivity : BaseActivity() {
 
         }
     }
+
+    fun byteToHexString(data: ByteArray): String {
+        val sb = StringBuilder()
+        for (b in data) {
+            sb.append(Integer.toString((b and 0xff) + 0x100, 16).substring(1))
+        }
+        return sb.toString()
+    }
+
 
 }
