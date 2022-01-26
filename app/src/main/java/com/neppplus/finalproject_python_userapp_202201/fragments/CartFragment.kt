@@ -77,6 +77,9 @@ class CartFragment : BaseFragment() {
         binding.btnBuy.setOnClickListener {
 
             val buyCartListJsonArr = JSONArray()
+
+            var sum = 0
+
             for (cartData in mCartList) {
                 if (cartData.isBuy) {
                     val cartJson = JSONObject()
@@ -84,12 +87,23 @@ class CartFragment : BaseFragment() {
                     cartJson.put("quantity", cartData.quantity)
                     cartJson.put("sale_price", cartData.product_info.sale_price)
 
+                    sum += cartData.product_info.sale_price * cartData.quantity
+
                     buyCartListJsonArr.put(cartJson)
                 }
             }
 
+
+            var shipmentFee = 0
+
+            if (sum < 30000) {
+                shipmentFee = 3000
+            }
+            sum += shipmentFee
+
             val myIntent = Intent(mContext, PurchaseActivity::class.java)
             myIntent.putExtra("buyInfoJson", buyCartListJsonArr.toString())
+            myIntent.putExtra("purchaseAmount", sum)
             startActivity(myIntent)
 
         }

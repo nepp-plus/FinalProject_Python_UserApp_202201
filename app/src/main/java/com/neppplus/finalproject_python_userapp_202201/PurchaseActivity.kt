@@ -34,11 +34,14 @@ class PurchaseActivity : BaseActivity() {
 
     var mBuyProductJsonStr = ""
 
+    var purchaseAmount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_purchase)
         Iamport.init(this)
         mBuyProductJsonStr = intent.getStringExtra("buyInfoJson").toString()
+        purchaseAmount = intent.getIntExtra("purchaseAmount", 0)
         Log.d("구매할상품들", mBuyProductJsonStr)
         setupEvents()
         setValues()
@@ -106,67 +109,92 @@ class PurchaseActivity : BaseActivity() {
             val userEmail = GlobalData.loginUser!!.email
             val now = Date().time
 
+            val selectedPayMethodIndex = binding.payMethodRadioGroup.indexOfChild(findViewById(binding.payMethodRadioGroup.checkedRadioButtonId))
+
+            if (selectedPayMethodIndex == -1) {
+
+                Toast.makeText(mContext, "선택된 결제 방법이 없습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val payMethod = binding.payMethodRadioGroup.getChildAt(selectedPayMethodIndex)!!.tag.toString()
+
+            val mid = "${userEmail}_${now}"
+
             val shipmentInfo = mSelectedShipmentInfo!!
-            apiService.postRequestOrder(
-                shipmentInfo.name,
-                "${shipmentInfo.address1} ${shipmentInfo.address2}",
-                shipmentInfo.zipcode,
-                shipmentInfo.phone,
-                shipmentOption,
-                "testimpuid1234",
-                "${userEmail}_${now}",
-                mBuyProductJsonStr
 
-            ).enqueue(object : Callback<BasicResponse> {
-                override fun onResponse(
-                    call: Call<BasicResponse>,
-                    response: Response<BasicResponse>
-                ) {
+            val request = IamPortRequest(
+                pg = "nice",                                 // PG 사
+                pay_method = payMethod,          // 결제수단
+                name = "일반 상품 구매",                         // 주문명
+                merchant_uid = mid,               // 주문번호
+                amount = purchaseAmount.toString(),                           // 결제금액
+                buyer_name = GlobalData.loginUser!!.name,
+                buyer_email = GlobalData.loginUser!!.email,
+            )
+            Iamport.payment("imp16646577", iamPortRequest = request,
+                approveCallback = {
 
-                    if (response.isSuccessful) {
 
-                        Toast.makeText(mContext, "구매가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                },
+                paymentResultCallback = {
+
+                    Log.d("paymentResultCallback", it.toString())
+
+                    it?.let {
+                        val impUid = it.imp_uid!!
+
+
+                        apiService.postRequestOrder(
+                            shipmentInfo.name,
+                            "${shipmentInfo.address1} ${shipmentInfo.address2}",
+                            shipmentInfo.zipcode,
+                            shipmentInfo.phone,
+                            shipmentOption,
+                            impUid,
+                            mid,
+                            mBuyProductJsonStr
+
+                        ).enqueue(object : Callback<BasicResponse> {
+                            override fun onResponse(
+                                call: Call<BasicResponse>,
+                                response: Response<BasicResponse>
+                            ) {
+
+                                if (response.isSuccessful) {
+
+                                    Toast.makeText(mContext, "구매가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+
+                                }
+                                else {
+
+                                    Toast.makeText(mContext, "구매에 실패했습니다.", Toast.LENGTH_SHORT).show()
+
+                                    val jsonObj = JSONObject(response.errorBody()!!.string())
+                                    Log.d("구매완료에러", jsonObj.toString())
+
+                                }
+
+                            }
+
+                            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                            }
+
+                        })
+
 
                     }
-                    else {
 
-                        Toast.makeText(mContext, "구매에 실패했습니다.", Toast.LENGTH_SHORT).show()
-
-                        val jsonObj = JSONObject(response.errorBody()!!.string())
-                        Log.d("구매완료에러", jsonObj.toString())
-
+                    if (it == null) {
+                        Toast.makeText(mContext, "결제에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
 
-                }
-
-                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
 
                 }
-
-            })
-
-
-//            val request = IamPortRequest(
-//                pg = "nice",                                 // PG 사
-//                pay_method = PayMethod.card.name,          // 결제수단
-//                name = "여기주문이요",                         // 주문명
-//                merchant_uid = "mid_123456",               // 주문번호
-//                amount = "3000",                           // 결제금액
-//                buyer_name = "홍길동"
-//            )
-//            Iamport.payment("imp16646577", iamPortRequest = request,
-//                approveCallback = {
-//
-////                  결제 성공시 -> [ {'product_id':3 , 'quantity': 10} , {'product_id':5 , 'quantity': 2}, {'product_id':8 , 'quantity': 1} ] 문구 전송
-//
-//
-//                },
-//                paymentResultCallback = {
-//
-//
-//                }
-//            )
+            )
         }
+
 
     }
 
@@ -233,14 +261,6 @@ class PurchaseActivity : BaseActivity() {
             binding.txtIsBasicShipment.visibility = View.GONE
 
         }
-    }
-
-    fun byteToHexString(data: ByteArray): String {
-        val sb = StringBuilder()
-        for (b in data) {
-            sb.append(Integer.toString((b and 0xff) + 0x100, 16).substring(1))
-        }
-        return sb.toString()
     }
 
 

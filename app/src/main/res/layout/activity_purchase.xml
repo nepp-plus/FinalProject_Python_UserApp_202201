@@ -215,6 +215,7 @@
 
 
                         <RadioGroup
+                            android:id="@+id/payMethodRadioGroup"
                             android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -222,24 +223,29 @@
 
                             <RadioButton
                                 android:id="@+id/radioCard"
+                                android:tag="card"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="신용카드" />
 
                             <RadioButton
                                 android:id="@+id/radioVBank"
+                                android:tag="vbank"
+                                android:enabled="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="무통장 입금 (가상계좌)" />
 
                             <RadioButton
                                 android:id="@+id/radioBank"
+                                android:tag="trans"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="실시간 계좌이체" />
 
                             <RadioButton
                                 android:id="@+id/radioPhone"
+                                android:tag="phone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="휴대폰 결제" />
