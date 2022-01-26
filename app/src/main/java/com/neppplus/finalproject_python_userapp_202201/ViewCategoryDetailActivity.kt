@@ -117,6 +117,7 @@ class ViewCategoryDetailActivity : BaseActivity() {
                     val br = response.body()!!
 
                     mSmallCategoryList.clear()
+                    mSmallCategoryList.add(SmallCategoryData(0, "전체", 0))
                     mSmallCategoryList.addAll(br.data.small_categories)
 
                     mSmallCategorySpinnerAdapter.notifyDataSetChanged()

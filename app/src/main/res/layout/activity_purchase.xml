@@ -246,6 +246,7 @@
                             <RadioButton
                                 android:id="@+id/radioPhone"
                                 android:tag="phone"
+                                android:enabled="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="휴대폰 결제" />

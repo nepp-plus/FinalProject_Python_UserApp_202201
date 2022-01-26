@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.neppplus.finalproject_python_userapp_202201.adapters.ImageSlideAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewProductDetailBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
@@ -129,6 +130,9 @@ class ViewProductDetailActivity : BaseActivity() {
         binding.txtProductName.text = mProduct.name
 
         setQuantityAndPriceTxt()
+
+        val imageAdapter = ImageSlideAdapter(mContext, mProduct.product_main_images)
+        binding.productThumbnailViewPager.adapter = imageAdapter
 
     }
 }
