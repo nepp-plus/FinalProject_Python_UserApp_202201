@@ -55,6 +55,7 @@ interface ServerAPIInterface {
     fun postRequestCart(
         @Field("product_id") productId: Int,
         @Field("quantity") quantity: Int,
+        @Field("option_info_str") optionStr: String,
     ): Call<BasicResponse>
 
     @GET("/cart")

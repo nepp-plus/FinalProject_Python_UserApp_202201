@@ -3,9 +3,11 @@ package com.neppplus.finalproject_python_userapp_202201
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -14,7 +16,10 @@ import com.neppplus.finalproject_python_userapp_202201.adapters.OptionValuesSpin
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewProductDetailBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
+import com.neppplus.finalproject_python_userapp_202201.models.ProductOptionValueData
 import com.neppplus.finalproject_python_userapp_202201.utils.WonFormatUtil
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,9 +44,27 @@ class ViewProductDetailActivity : BaseActivity() {
 
         binding.btnCart.setOnClickListener {
 
+            val selectedOptionsJSONArr = JSONArray()
+
+            for (view in binding.optionListLayout.children) {
+                val txtOptionName = view.findViewById<TextView>(R.id.txtOptionName)
+                val optionsValuesListSpinner = view.findViewById<Spinner>(R.id.optionsValuesListSpinner)
+
+                val selectedValue =  optionsValuesListSpinner.selectedItem as ProductOptionValueData
+                Log.d("선택한옵션값", selectedValue.id.toString())
+
+                val jsonObj = JSONObject()
+                jsonObj.put("option_id", txtOptionName.tag.toString().toInt())
+                jsonObj.put("selected_value_id", selectedValue.id)
+
+                selectedOptionsJSONArr.put(jsonObj)
+            }
+
+
             apiService.postRequestCart(
                 mProduct.id,
                 buyQuantity,
+                selectedOptionsJSONArr.toString()
             ).enqueue(object : Callback<BasicResponse> {
                 override fun onResponse(
                     call: Call<BasicResponse>,
@@ -159,6 +182,7 @@ class ViewProductDetailActivity : BaseActivity() {
             val optionsValuesListSpinner = row.findViewById<Spinner>(R.id.optionsValuesListSpinner)
 
             txtOptionName.text = option.name
+            txtOptionName.tag = option.id
             optionsValuesListSpinner.adapter = OptionValuesSpinnerAdapter(mContext, option.option_values)
 
             binding.optionListLayout.addView(row)
