@@ -4,10 +4,13 @@ import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.neppplus.finalproject_python_userapp_202201.adapters.ImageSlideAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewProductDetailBinding
@@ -55,6 +58,10 @@ class ViewProductDetailActivity : BaseActivity() {
                         val imgProductThumbnail = customView.findViewById<ImageView>(R.id.imgProductThumbnail)
                         val imgClose = customView.findViewById<ImageView>(R.id.imgClose)
                         val btnGoCart = customView.findViewById<TextView>(R.id.btnGoCart)
+
+                        if (mProduct.product_main_images.isNotEmpty()) {
+                            Glide.with(mContext).load(mProduct.product_main_images[0]).into(imgProductThumbnail)
+                        }
 
                         dialog.setContentView(customView)
                         dialog.show()
@@ -133,6 +140,17 @@ class ViewProductDetailActivity : BaseActivity() {
 
         val imageAdapter = ImageSlideAdapter(mContext, mProduct.product_main_images)
         binding.productThumbnailViewPager.adapter = imageAdapter
+
+        for (detailImage in mProduct.product_detail_images) {
+
+            val imgv = ImageView(mContext)
+            imgv.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            Glide.with(mContext).load(detailImage.image_url).into(imgv)
+
+            binding.productDetailImgLinearLayout.addView(imgv)
+
+        }
 
     }
 }

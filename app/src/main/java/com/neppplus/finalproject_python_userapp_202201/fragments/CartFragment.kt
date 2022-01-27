@@ -83,7 +83,7 @@ class CartFragment : BaseFragment() {
             for (cartData in mCartList) {
                 if (cartData.isBuy) {
                     val cartJson = JSONObject()
-                    cartJson.put("product_id", cartData.id)
+                    cartJson.put("product_id", cartData.product_info.id)
                     cartJson.put("quantity", cartData.quantity)
                     cartJson.put("sale_price", cartData.product_info.sale_price)
 
