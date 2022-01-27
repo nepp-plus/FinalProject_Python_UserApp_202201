@@ -145,7 +145,8 @@ class ViewProductDetailActivity : BaseActivity() {
 
             val imgv = ImageView(mContext)
             imgv.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
+            imgv.scaleType = ImageView.ScaleType.FIT_XY
+            imgv.adjustViewBounds = true
             Glide.with(mContext).load(detailImage.image_url).into(imgv)
 
             binding.productDetailImgLinearLayout.addView(imgv)
