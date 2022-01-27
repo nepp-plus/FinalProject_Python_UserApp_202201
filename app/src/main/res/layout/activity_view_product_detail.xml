@@ -65,15 +65,17 @@
                         android:id="@+id/productThumbnailViewPager"
                         android:layout_width="match_parent"
                         android:layout_height="250dp" />
-                    <TextView
-                        android:id="@+id/txtOptionName"
-                        android:layout_marginTop="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="옵션항목이름" />
-                    <Spinner
+
+                    <LinearLayout
+                        android:id="@+id/optionListLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"

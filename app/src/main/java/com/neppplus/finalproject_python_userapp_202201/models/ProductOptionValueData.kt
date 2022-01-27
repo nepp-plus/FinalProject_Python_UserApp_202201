@@ -1,0 +1,13 @@
+package com.neppplus.finalproject_python_userapp_202201.models
+
+import java.io.Serializable
+
+class ProductOptionValueData(
+
+    val id: Int,
+    val name: String,
+    val option_id: Int,
+
+
+): Serializable {
+}

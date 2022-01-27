@@ -5,14 +5,12 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.neppplus.finalproject_python_userapp_202201.adapters.ImageSlideAdapter
+import com.neppplus.finalproject_python_userapp_202201.adapters.OptionValuesSpinnerAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewProductDetailBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
@@ -150,6 +148,20 @@ class ViewProductDetailActivity : BaseActivity() {
             Glide.with(mContext).load(detailImage.image_url).into(imgv)
 
             binding.productDetailImgLinearLayout.addView(imgv)
+
+        }
+
+        for (option in mProduct.product_options) {
+
+            val row = LayoutInflater.from(mContext).inflate(R.layout.option_list_item, null)
+
+            val txtOptionName = row.findViewById<TextView>(R.id.txtOptionName)
+            val optionsValuesListSpinner = row.findViewById<Spinner>(R.id.optionsValuesListSpinner)
+
+            txtOptionName.text = option.name
+            optionsValuesListSpinner.adapter = OptionValuesSpinnerAdapter(mContext, option.option_values)
+
+            binding.optionListLayout.addView(row)
 
         }
 
