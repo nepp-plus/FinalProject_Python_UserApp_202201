@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.models.BannerData
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
+import com.neppplus.finalproject_python_userapp_202201.utils.WonFormatUtil
 
 class HomeRecyclerAdapter(
     val mContext: Context,
@@ -39,7 +41,21 @@ class HomeRecyclerAdapter(
 
     inner class TodayHotViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
+        val imgProductThumbnail = view.findViewById<ImageView>(R.id.imgProductThumbnail)
+        val imgLargeCategory = view.findViewById<ImageView>(R.id.imgLargeCategory)
+        val txtSmallCategoryName = view.findViewById<TextView>(R.id.txtSmallCategoryName)
+        val txtProductName = view.findViewById<TextView>(R.id.txtProductName)
+        val txtSalePrice = view.findViewById<TextView>(R.id.txtSalePrice)
+
+
         fun bind(data: ProductData, position: Int) {
+
+            Glide.with(mContext).load(data.product_main_images[0].image_url).into(imgProductThumbnail)
+            Glide.with(mContext).load(data.large_category_info.icon_url).into(imgLargeCategory)
+
+            txtSmallCategoryName.text = data.small_category_info.name
+            txtSalePrice.text = WonFormatUtil.getWonFormat(data.sale_price)
+            txtProductName.text = data.name
 
 
             if (oic != null) {

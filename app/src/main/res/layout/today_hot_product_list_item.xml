@@ -6,12 +6,44 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imgProductThumbnail"
-        android:src="@mipmap/ic_launcher"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgProductThumbnail"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="125dp"
+            android:layout_marginTop="15dp"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/white_half_round_rect">
+
+            <ImageView
+                android:id="@+id/imgLargeCategory"
+                android:layout_width="20dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/txtSmallCategoryName"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:text="카테고리 이름" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
