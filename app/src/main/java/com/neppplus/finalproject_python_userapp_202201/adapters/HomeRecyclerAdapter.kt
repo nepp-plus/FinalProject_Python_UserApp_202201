@@ -1,17 +1,21 @@
 package com.neppplus.finalproject_python_userapp_202201.adapters
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.models.BannerData
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
 import com.neppplus.finalproject_python_userapp_202201.utils.WonFormatUtil
+import java.util.*
 
 class HomeRecyclerAdapter(
     val mContext: Context,
@@ -29,11 +33,50 @@ class HomeRecyclerAdapter(
     var oic : OnItemClick? = null
     var oilc : OnItemLongClick? = null
 
+    var isBannerViewPagerInit = false
+    lateinit var mBannerSlideAdapter : BannerSlideAdapter
 
     inner class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind() {
+        val bannerViewPager = view.findViewById<ViewPager2>(R.id.bannerViewPager)
 
+        fun bind() {
+            mBannerSlideAdapter = BannerSlideAdapter(
+                mContext,
+                mBannerList
+            )
+            bannerViewPager.adapter = mBannerSlideAdapter
+
+            if (!isBannerViewPagerInit) {
+
+                var currentPage = 0
+
+                val nextPage = {
+
+                    currentPage++
+
+                    if (currentPage == mBannerList.size) {
+                        currentPage = 0
+                    }
+                    bannerViewPager.currentItem = currentPage
+
+                }
+                val myHandler = Handler(Looper.getMainLooper())
+
+//            Timer클래스 활용 =>  할 일 (코드)를 2초마다 반복.
+
+                val timer = Timer()
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+
+                        myHandler.post(nextPage)
+
+                    }
+
+                }, 2000, 2000)
+
+                isBannerViewPagerInit = true
+            }
 
         }
     }
