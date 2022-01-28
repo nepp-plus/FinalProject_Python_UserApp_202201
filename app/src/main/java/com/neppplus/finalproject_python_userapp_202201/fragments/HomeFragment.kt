@@ -2,11 +2,11 @@ package com.neppplus.finalproject_python_userapp_202201.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.ViewProductDetailActivity
@@ -80,6 +80,26 @@ class HomeFragment : BaseFragment() {
                     mTodayHotList.addAll(br.data.todays_hot_lists)
 
                     mHomeRecyclerAdapter.notifyDataSetChanged()
+
+                    apiService.getRequestMainBanner().enqueue(object : Callback<BasicResponse> {
+                        override fun onResponse(
+                            call: Call<BasicResponse>,
+                            response: Response<BasicResponse>
+                        ) {
+                            Log.d("배너응답", response.toString())
+                            if (response.isSuccessful) {
+                                mBannerList.clear()
+                                mBannerList.addAll(response.body()!!.data.banners)
+                                mHomeRecyclerAdapter.notifyDataSetChanged()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+
                 }
 
             }

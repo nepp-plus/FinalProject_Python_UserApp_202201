@@ -104,5 +104,9 @@ interface ServerAPIInterface {
     fun getRequestTodayHot(
     ): Call<BasicResponse>
 
+    @GET("/main")
+    fun getRequestMainBanner(
+    ): Call<BasicResponse>
+
 
 }

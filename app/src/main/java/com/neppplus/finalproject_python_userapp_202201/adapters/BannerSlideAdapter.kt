@@ -1,6 +1,8 @@
 package com.neppplus.finalproject_python_userapp_202201.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,13 +26,21 @@ class BannerSlideAdapter(
 
         fun bind(data: BannerData, position: Int) {
 
-//            Glide.with(mContext).load(data.image_url).into(imgImage)
+            Glide.with(mContext).load(data.img_url).into(imgImage)
+
+            view.setOnClickListener {
+
+                val myUri = Uri.parse(data.main_url)
+                val myIntent = Intent(Intent.ACTION_VIEW, myUri)
+                mContext.startActivity(myIntent)
+
+            }
 
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.image_slider_item, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.banner_slider_item, parent, false)
         return ViewHolder(view)
     }
 
