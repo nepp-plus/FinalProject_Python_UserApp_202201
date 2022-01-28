@@ -1,5 +1,6 @@
 package com.neppplus.finalproject_python_userapp_202201.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neppplus.finalproject_python_userapp_202201.R
+import com.neppplus.finalproject_python_userapp_202201.ViewProductDetailActivity
 import com.neppplus.finalproject_python_userapp_202201.adapters.HomeRecyclerAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentHomeBinding
 import com.neppplus.finalproject_python_userapp_202201.models.BannerData
@@ -42,11 +44,25 @@ class HomeFragment : BaseFragment() {
 
     override fun setupEvents() {
 
+        mHomeRecyclerAdapter = HomeRecyclerAdapter(mContext, mBannerList, mTodayHotList)
+        mHomeRecyclerAdapter.oic = object : HomeRecyclerAdapter.OnItemClick {
+            override fun onItemClick(position: Int) {
+
+                val clickTodayHotProduct = mTodayHotList[position]
+
+                val myIntent = Intent(mContext, ViewProductDetailActivity::class.java)
+                myIntent.putExtra("product", clickTodayHotProduct)
+                startActivity(myIntent)
+
+            }
+
+        }
+
+
     }
 
     override fun setValues() {
 
-        mHomeRecyclerAdapter = HomeRecyclerAdapter(mContext, mBannerList, mTodayHotList)
         binding.homeRecyclerView.adapter = mHomeRecyclerAdapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(mContext)
         getHomeData()

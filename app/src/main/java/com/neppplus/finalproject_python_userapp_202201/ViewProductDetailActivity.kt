@@ -82,7 +82,7 @@ class ViewProductDetailActivity : BaseActivity() {
                         val btnGoCart = customView.findViewById<TextView>(R.id.btnGoCart)
 
                         if (mProduct.product_main_images.isNotEmpty()) {
-                            Glide.with(mContext).load(mProduct.product_main_images[0]).into(imgProductThumbnail)
+                            Glide.with(mContext).load(mProduct.product_main_images[0].image_url).into(imgProductThumbnail)
                         }
 
                         dialog.setContentView(customView)
