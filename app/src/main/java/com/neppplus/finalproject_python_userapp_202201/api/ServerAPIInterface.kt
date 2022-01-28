@@ -90,7 +90,7 @@ interface ServerAPIInterface {
     fun postRequestOrder(
         @Field("receiver_name") receiverName: String,
         @Field("address") address: String,
-        @Field("zip_code") zipCode: String,
+        @Field("number_zip") zipCode: String,
         @Field("phone_num") phoneNum: String,
         @Field("request_message") request_message: String,
         @Field("payment_uid") paymentUid: String,

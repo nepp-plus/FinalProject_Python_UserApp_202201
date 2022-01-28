@@ -15,7 +15,7 @@ class ServerAPI {
 
 //        private var BASE_URL = "http://3.35.185.121"
         private var BASE_URL = "https://api.copang.xyz"
-//        private var BASE_URL = "http://192.168.0.226:5000"
+//        private var BASE_URL = "http://192.168.0.82:5000"
 //        private var BASE_URL = "http://10.0.2.2:5000"
 
         private var retrofit: Retrofit? = null
