@@ -148,11 +148,6 @@ class CartFragment : BaseFragment() {
 
                         }
 
-                        val myHandler = Handler(Looper.getMainLooper())
-                        myHandler.postDelayed({
-                            binding.selectAllCheckBox.isChecked = true
-                        }, 200)
-
 
                     }
 
@@ -214,6 +209,7 @@ class CartFragment : BaseFragment() {
         val btnDelete = row.findViewById<Button>(R.id.btnDelete)
         val cartCountSpinner = row.findViewById<Spinner>(R.id.cartCountSpinner)
         val imgProductThumbnail = row.findViewById<ImageView>(R.id.imgProductThumbnail)
+        val selectedOptionsLayout = row.findViewById<LinearLayout>(R.id.selectedOptionsLayout)
 
         productCheckBox.text = data.product_info.name
         txtSalePrice.text = NumberFormat.getNumberInstance().format(data.product_info.sale_price)
@@ -222,6 +218,16 @@ class CartFragment : BaseFragment() {
 
         if (data.product_info.product_main_images.isNotEmpty()) {
             Glide.with(mContext).load(data.product_info.product_main_images[0].image_url).into(imgProductThumbnail)
+        }
+
+        for (option in  data.option_info) {
+            val optionRow = LayoutInflater.from(mContext).inflate(R.layout.selected_option_list_item, null)
+
+            val txtSelectedOptionValue = optionRow.findViewById<TextView>(R.id.txtSelectedOptionValue)
+
+            txtSelectedOptionValue.text = "- ${option.option.name} : ${option.value.name}"
+
+            selectedOptionsLayout.addView(optionRow)
         }
 
         fun getItemTotalPrice() : Int {
@@ -247,6 +253,10 @@ class CartFragment : BaseFragment() {
             calculateTotalPrice()
 
         }
+
+         if (binding.selectAllCheckBox.isChecked) {
+            productCheckBox.isChecked =  true
+         }
 
         cartCountSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {

@@ -10,6 +10,7 @@ class CartData(
     var quantity: Int,
     val product_info: ProductData,
     var isBuy: Boolean = false,
+    val option_info: List<CartOptionData>
 
 ): Serializable {
 }
