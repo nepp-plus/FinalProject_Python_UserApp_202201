@@ -99,4 +99,10 @@ interface ServerAPIInterface {
 
         ): Call<BasicResponse>
 
+
+    @GET("/todayshot")
+    fun getRequestTodayHot(
+    ): Call<BasicResponse>
+
+
 }

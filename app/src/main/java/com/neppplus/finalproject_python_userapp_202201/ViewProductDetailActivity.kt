@@ -60,6 +60,7 @@ class ViewProductDetailActivity : BaseActivity() {
                 selectedOptionsJSONArr.put(jsonObj)
             }
 
+            Log.d("앱에서만든 JSON Str", selectedOptionsJSONArr.toString())
 
             apiService.postRequestCart(
                 mProduct.id,

@@ -11,7 +11,9 @@ class ProductData(
     val sale_price: Int,
     val product_detail_images: List<ImageData>,
     val product_main_images: List<ImageData>,
-    val product_options: List<ProductOptionData>
+    val product_options: List<ProductOptionData>,
+    val small_category_info: SmallCategoryData,
+    val large_category_info: LargeCategoryData,
 
     ): Serializable {
 }

@@ -1,0 +1,109 @@
+package com.neppplus.finalproject_python_userapp_202201.adapters
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.neppplus.finalproject_python_userapp_202201.R
+import com.neppplus.finalproject_python_userapp_202201.models.BannerData
+import com.neppplus.finalproject_python_userapp_202201.models.ProductData
+
+class HomeRecyclerAdapter(
+    val mContext: Context,
+    val mBannerList:List<BannerData>,
+    val mList:List<ProductData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    interface OnItemClick {
+        fun onItemClick(position: Int)
+    }
+
+    interface OnItemLongClick {
+        fun onItemLongClick(position: Int)
+    }
+
+    var oic : OnItemClick? = null
+    var oilc : OnItemLongClick? = null
+
+
+    inner class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bind() {
+
+
+        }
+    }
+
+
+    inner class TodayHotViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bind(data: ProductData, position: Int) {
+
+
+            if (oic != null) {
+                view.setOnClickListener {
+                    oic!!.onItemClick(position)
+                }
+            }
+
+
+            if (oilc != null) {
+                view.setOnLongClickListener {
+                    oilc!!.onItemLongClick(position)
+                    return@setOnLongClickListener true
+                }
+            }
+
+        }
+    }
+
+
+    val HEADER_VIEW_TYPE = 1000
+    val TODAY_HOT_ITEM_TYPE = 1001
+
+    override fun getItemViewType(position: Int): Int {
+
+        return when (position) {
+
+            0 -> HEADER_VIEW_TYPE
+            else -> TODAY_HOT_ITEM_TYPE
+
+        }
+
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            HEADER_VIEW_TYPE -> {
+                val view = LayoutInflater.from(mContext).inflate(R.layout.main_banner_layout, parent, false)
+                HeaderViewHolder(view)
+            }
+            else -> {
+
+                val view = LayoutInflater.from(mContext).inflate(R.layout.today_hot_product_list_item, parent, false)
+                TodayHotViewHolder(view)
+            }
+        }
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is HeaderViewHolder -> {
+                holder.bind()
+
+            }
+            is TodayHotViewHolder -> {
+
+                holder.bind(mList[position - 1], position-1)
+
+            }
+        }
+    }
+
+    override fun getItemCount() = mList.size
+
+}
