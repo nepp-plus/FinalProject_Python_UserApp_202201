@@ -87,6 +87,16 @@ class CartFragment : BaseFragment() {
                     cartJson.put("quantity", cartData.quantity)
                     cartJson.put("sale_price", cartData.product_info.sale_price)
 
+                    val optionJsonArr = JSONArray()
+                    for (option in cartData.option_info) {
+                        val optionJsonObj = JSONObject()
+                        optionJsonObj.put("option_id", option.option_id)
+                        optionJsonObj.put("value_id", option.value_id)
+                        optionJsonArr.put(optionJsonObj)
+                    }
+
+                    cartJson.put("option_infos", optionJsonArr)
+
                     sum += cartData.product_info.sale_price * cartData.quantity
 
                     buyCartListJsonArr.put(cartJson)
