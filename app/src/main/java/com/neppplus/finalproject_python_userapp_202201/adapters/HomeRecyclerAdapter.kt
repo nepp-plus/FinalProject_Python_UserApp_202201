@@ -15,6 +15,7 @@ import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.models.BannerData
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
 import com.neppplus.finalproject_python_userapp_202201.utils.WonFormatUtil
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 import java.util.*
 
 class HomeRecyclerAdapter(
@@ -39,6 +40,7 @@ class HomeRecyclerAdapter(
     inner class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         val bannerViewPager = view.findViewById<ViewPager2>(R.id.bannerViewPager)
+        val dotsIndicator = view.findViewById<DotsIndicator>(R.id.dotsIndicator)
 
         fun bind() {
             mBannerSlideAdapter = BannerSlideAdapter(
@@ -46,6 +48,7 @@ class HomeRecyclerAdapter(
                 mBannerList
             )
             bannerViewPager.adapter = mBannerSlideAdapter
+            dotsIndicator.setViewPager2(bannerViewPager)
 
             if (!isBannerViewPagerInit) {
 
