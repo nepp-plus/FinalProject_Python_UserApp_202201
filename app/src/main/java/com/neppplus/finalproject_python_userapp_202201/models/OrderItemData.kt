@@ -9,7 +9,7 @@ class OrderItemData(
     val product_id: Int,
     val product_quantity: Int,
     var product: ProductData,
-    val product_info: ProductData,
+    val review: ReviewData,
     val selected_options: List<OrderItemOptionData>
 
 ): Serializable {
