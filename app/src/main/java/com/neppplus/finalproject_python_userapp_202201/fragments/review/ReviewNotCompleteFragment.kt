@@ -10,6 +10,7 @@ import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentRevie
 import com.neppplus.finalproject_python_userapp_202201.fragments.BaseFragment
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.CartData
+import com.neppplus.finalproject_python_userapp_202201.models.OrderItemData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +18,7 @@ import retrofit2.Response
 class ReviewNotCompleteFragment : BaseFragment() {
 
     lateinit var binding: FragmentReviewNotCompleteBinding
-    val mCartList = ArrayList<CartData>()
+    val mOrderItemList = ArrayList<OrderItemData>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +53,10 @@ class ReviewNotCompleteFragment : BaseFragment() {
 
                 if (response.isSuccessful) {
 
+                    val br = response.body()!!
 
+                    mOrderItemList.clear()
+                    mOrderItemList.addAll(br.data.user_review_list)
 
                 }
 

@@ -19,7 +19,9 @@ class DataResponse(
     val basic_address: ShipmentInfoData?,
 
     val todays_hot_lists: List<ProductData>,
-    val banners: List<BannerData>
+    val banners: List<BannerData>,
+
+    val user_review_list: List<OrderItemData>
 
 ) {
 }
