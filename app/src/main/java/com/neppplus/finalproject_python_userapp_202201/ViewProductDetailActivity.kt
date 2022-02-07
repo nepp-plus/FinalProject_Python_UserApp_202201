@@ -23,6 +23,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 class ViewProductDetailActivity : BaseActivity() {
 
@@ -158,6 +159,14 @@ class ViewProductDetailActivity : BaseActivity() {
 
         binding.txtProductName.text = mProduct.name
 
+        setProductDataToUI()
+
+        getProductDetailFromServer()
+
+    }
+
+    private fun setProductDataToUI() {
+
         setQuantityAndPriceTxt()
 
         val imageAdapter = ImageSlideAdapter(mContext, mProduct.product_main_images)
@@ -203,5 +212,36 @@ class ViewProductDetailActivity : BaseActivity() {
 
         }
 
+        try {
+
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
+
+
+
+    private fun getProductDetailFromServer() {
+        apiService.getRequestProductDetail(
+            mProduct.id
+        ).enqueue(object :Callback<BasicResponse> {
+            override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
+
+                if (response.isSuccessful) {
+
+                    mProduct = response.body()!!.data.product
+                    setProductDataToUI()
+                }
+
+            }
+
+            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+            }
+
+        })
+    }
+
 }

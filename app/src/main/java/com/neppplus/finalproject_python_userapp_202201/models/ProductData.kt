@@ -15,6 +15,7 @@ class ProductData(
     val product_infos: List<ProductInfoData>,
     val small_category_info: SmallCategoryData,
     val large_category_info: LargeCategoryData,
+    val reviews: List<ReviewData>,
 
     ): Serializable {
 }

@@ -124,4 +124,12 @@ interface ServerAPIInterface {
 
         ): Call<BasicResponse>
 
+
+    @GET("/product/{product_id}")
+    fun getRequestProductDetail(
+        @Path("product_id") id: Int,
+    ): Call<BasicResponse>
+
+
+
 }
