@@ -9,11 +9,20 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayoutMediator
 import com.neppplus.finalproject_python_userapp_202201.adapters.ImageSlideAdapter
 import com.neppplus.finalproject_python_userapp_202201.adapters.OptionValuesSpinnerAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.ActivityViewProductDetailBinding
+import com.neppplus.finalproject_python_userapp_202201.fragments.product.ProductDetailFragment
+import com.neppplus.finalproject_python_userapp_202201.fragments.product.ProductReviewListFragment
+import com.neppplus.finalproject_python_userapp_202201.fragments.review.ReviewCompleteFragment
+import com.neppplus.finalproject_python_userapp_202201.fragments.review.ReviewNotCompleteFragment
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
 import com.neppplus.finalproject_python_userapp_202201.models.ProductOptionValueData
@@ -161,6 +170,18 @@ class ViewProductDetailActivity : BaseActivity() {
 
         setProductDataToUI()
 
+
+        binding.productDetailViewPager.adapter = PagerAdapter(supportFragmentManager, lifecycle)
+
+        TabLayoutMediator(binding.productDetailTabLayout, binding.productDetailViewPager) { tab, position ->
+
+            tab.text = when (position) {
+                0 -> "상품 정보"
+                else -> "리뷰 목록"
+            }
+
+        }.attach()
+
         getProductDetailFromServer()
 
     }
@@ -171,18 +192,6 @@ class ViewProductDetailActivity : BaseActivity() {
 
         val imageAdapter = ImageSlideAdapter(mContext, mProduct.product_main_images)
         binding.productThumbnailViewPager.adapter = imageAdapter
-
-        for (detailImage in mProduct.product_detail_images) {
-
-            val imgv = ImageView(mContext)
-            imgv.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            imgv.scaleType = ImageView.ScaleType.FIT_XY
-            imgv.adjustViewBounds = true
-            Glide.with(mContext).load(detailImage.image_url).into(imgv)
-
-            binding.productDetailImgLinearLayout.addView(imgv)
-
-        }
 
         for (option in mProduct.product_options) {
 
@@ -199,18 +208,6 @@ class ViewProductDetailActivity : BaseActivity() {
 
         }
 
-        for (info in mProduct.product_infos) {
-            val row = LayoutInflater.from(mContext).inflate(R.layout.product_info_list_item, null)
-
-            val txtDescription = row.findViewById<TextView>(R.id.txtDescription)
-            val txtDescriptionContent = row.findViewById<TextView>(R.id.txtDescriptionContent)
-
-            txtDescription.text = info.description
-            txtDescriptionContent.text = info.description_content
-
-            binding.productInfoLayout.addView(row)
-
-        }
 
         try {
 
@@ -243,5 +240,19 @@ class ViewProductDetailActivity : BaseActivity() {
 
         })
     }
+
+
+    private inner class PagerAdapter(fm: FragmentManager, lc: Lifecycle) :
+        FragmentStateAdapter(fm, lc) {
+        override fun getItemCount() = 2
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> ProductDetailFragment(mProduct)
+                1 -> ProductReviewListFragment(mProduct)
+                else -> error("no such position: $position")
+            }
+        }
+    }
+
 
 }
