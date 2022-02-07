@@ -1,5 +1,6 @@
 package com.neppplus.finalproject_python_userapp_202201
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.iamport.sdk.data.sdk.IamPortRequest
 import com.iamport.sdk.data.sdk.PayMethod
@@ -123,76 +125,85 @@ class PurchaseActivity : BaseActivity() {
 
             val shipmentInfo = mSelectedShipmentInfo!!
 
-            val request = IamPortRequest(
-                pg = "nice",                                 // PG 사
-                pay_method = payMethod,          // 결제수단
-                name = "일반 상품 구매",                         // 주문명
-                merchant_uid = mid,               // 주문번호
-                amount = purchaseAmount.toString(),                           // 결제금액
-                buyer_name = GlobalData.loginUser!!.name,
-                buyer_email = GlobalData.loginUser!!.email,
-            )
-            Iamport.payment("imp16646577", iamPortRequest = request,
-                approveCallback = {
+            val alert = AlertDialog.Builder(mContext)
+            alert.setTitle("테스트 결제 안내")
+            alert.setMessage("본 결제는 테스트 결제로, 다음날 자동으로 취소됩니다. 실제 물건이 배송되지 않음을 유의 바랍니다.")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+
+                val request = IamPortRequest(
+                    pg = "nice",                                 // PG 사
+                    pay_method = payMethod,          // 결제수단
+                    name = "일반 상품 구매",                         // 주문명
+                    merchant_uid = mid,               // 주문번호
+                    amount = purchaseAmount.toString(),                           // 결제금액
+                    buyer_name = GlobalData.loginUser!!.name,
+                    buyer_email = GlobalData.loginUser!!.email,
+                )
+                Iamport.payment("imp16646577", iamPortRequest = request,
+                    approveCallback = {
 
 
-                },
-                paymentResultCallback = {
+                    },
+                    paymentResultCallback = {
 
-                    Log.d("paymentResultCallback", it.toString())
+                        Log.d("paymentResultCallback", it.toString())
 
-                    it?.let {
-                        val impUid = it.imp_uid!!
+                        it?.let {
+                            val impUid = it.imp_uid!!
 
 
-                        apiService.postRequestOrder(
-                            shipmentInfo.name,
-                            "${shipmentInfo.address1} ${shipmentInfo.address2}",
-                            shipmentInfo.zipcode,
-                            shipmentInfo.phone,
-                            shipmentOption,
-                            impUid,
-                            mid,
-                            mBuyProductJsonStr
+                            apiService.postRequestOrder(
+                                shipmentInfo.name,
+                                "${shipmentInfo.address1} ${shipmentInfo.address2}",
+                                shipmentInfo.zipcode,
+                                shipmentInfo.phone,
+                                shipmentOption,
+                                impUid,
+                                mid,
+                                mBuyProductJsonStr
 
-                        ).enqueue(object : Callback<BasicResponse> {
-                            override fun onResponse(
-                                call: Call<BasicResponse>,
-                                response: Response<BasicResponse>
-                            ) {
+                            ).enqueue(object : Callback<BasicResponse> {
+                                override fun onResponse(
+                                    call: Call<BasicResponse>,
+                                    response: Response<BasicResponse>
+                                ) {
 
-                                if (response.isSuccessful) {
+                                    if (response.isSuccessful) {
 
-                                    Toast.makeText(mContext, "구매가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(mContext, "구매가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+
+                                    }
+                                    else {
+
+                                        Toast.makeText(mContext, "구매에 실패했습니다.", Toast.LENGTH_SHORT).show()
+
+                                        val jsonObj = JSONObject(response.errorBody()!!.string())
+                                        Log.d("구매완료에러", jsonObj.toString())
+
+                                    }
 
                                 }
-                                else {
 
-                                    Toast.makeText(mContext, "구매에 실패했습니다.", Toast.LENGTH_SHORT).show()
-
-                                    val jsonObj = JSONObject(response.errorBody()!!.string())
-                                    Log.d("구매완료에러", jsonObj.toString())
+                                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
 
                                 }
 
-                            }
+                            })
 
-                            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
 
-                            }
+                        }
 
-                        })
+                        if (it == null) {
+                            Toast.makeText(mContext, "결제에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        }
 
 
                     }
+                )
+            })
 
-                    if (it == null) {
-                        Toast.makeText(mContext, "결제에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                    }
+            alert.show()
 
-
-                }
-            )
         }
 
 

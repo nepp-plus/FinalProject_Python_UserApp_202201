@@ -273,11 +273,13 @@
                 android:text="장바구니 담기"
                 android:gravity="center"
                 android:textColor="@color/blue"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnBuy"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="구매하기 >"
