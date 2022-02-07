@@ -1,25 +1,17 @@
 package com.neppplus.finalproject_python_userapp_202201.fragments.product
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.neppplus.finalproject_python_userapp_202201.R
-import com.neppplus.finalproject_python_userapp_202201.adapters.ReviewOrderItemAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentProductDetailBinding
 import com.neppplus.finalproject_python_userapp_202201.fragments.BaseFragment
-import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
-import com.neppplus.finalproject_python_userapp_202201.models.OrderItemData
 import com.neppplus.finalproject_python_userapp_202201.models.ProductData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProductDetailFragment(val mProduct: ProductData) : BaseFragment() {
 

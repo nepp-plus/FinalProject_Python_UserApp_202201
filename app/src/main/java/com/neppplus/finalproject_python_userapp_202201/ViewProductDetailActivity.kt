@@ -211,6 +211,11 @@ class ViewProductDetailActivity : BaseActivity() {
 
         try {
 
+            val reviewFrag = supportFragmentManager.findFragmentByTag("f1") as ProductReviewListFragment
+            reviewFrag.mReviewList.clear()
+            reviewFrag.mReviewList.addAll(mProduct.reviews)
+            reviewFrag.mAdapter.notifyDataSetChanged()
+
         }
         catch (e: Exception) {
             e.printStackTrace()
@@ -247,8 +252,12 @@ class ViewProductDetailActivity : BaseActivity() {
         override fun getItemCount() = 2
         override fun createFragment(position: Int): Fragment {
             return when (position) {
+
                 0 -> ProductDetailFragment(mProduct)
-                1 -> ProductReviewListFragment(mProduct)
+                1 -> {
+                    val fReview = ProductReviewListFragment(mProduct)
+                    fReview
+                }
                 else -> error("no such position: $position")
             }
         }

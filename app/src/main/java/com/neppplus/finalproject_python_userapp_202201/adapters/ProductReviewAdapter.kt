@@ -1,27 +1,23 @@
 package com.neppplus.finalproject_python_userapp_202201.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.neppplus.finalproject_python_userapp_202201.EditReviewActivity
 import com.neppplus.finalproject_python_userapp_202201.R
-import com.neppplus.finalproject_python_userapp_202201.models.LargeCategoryData
 import com.neppplus.finalproject_python_userapp_202201.models.OrderItemData
 import com.neppplus.finalproject_python_userapp_202201.models.OrderItemOptionData
+import com.neppplus.finalproject_python_userapp_202201.models.ReviewData
 import com.willy.ratingbar.BaseRatingBar
 import java.text.SimpleDateFormat
 
-class ReviewOrderItemAdapter(
+class ProductReviewAdapter(
     val mContext: Context,
-    val mList:List<OrderItemData>) : RecyclerView.Adapter<ReviewOrderItemAdapter.ViewHolder>() {
+    val mList:List<ReviewData>) : RecyclerView.Adapter<ProductReviewAdapter.ViewHolder>() {
 
     val mDateFormat = SimpleDateFormat("yyyy.MM.dd")
 
@@ -46,28 +42,23 @@ class ReviewOrderItemAdapter(
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        private val imgProductThumbnail = view.findViewById<ImageView>(R.id.imgProductThumbnail)
-        private val txtProductName = view.findViewById<TextView>(R.id.txtProductName)
         private val reviewScoreRatingBar = view.findViewById<BaseRatingBar>(R.id.reviewScoreRatingBar)
         private val txtReviewTitle = view.findViewById<TextView>(R.id.txtReviewTitle)
         private val txtReviewContent = view.findViewById<TextView>(R.id.txtReviewContent)
         private var txtReviewDate = view.findViewById<TextView>(R.id.txtReviewDate)
 
-        fun bind(data: OrderItemData, position: Int) {
+        fun bind(data: ReviewData, position: Int) {
 
-            Glide.with(mContext).load(data.product.product_main_images[0].image_url).into(imgProductThumbnail)
-            txtProductName.text = data.product.name
+            reviewScoreRatingBar.rating = data.score.toFloat()
+            txtReviewTitle.text = data.review_title
+            txtReviewContent.text = data.review_content
 
-            reviewScoreRatingBar.rating = data.review.score.toFloat()
-            txtReviewTitle.text = data.review.review_title
-            txtReviewContent.text = data.review.review_content
-
-            txtReviewDate.text = mDateFormat.format(data.review.created_at)
+            txtReviewDate.text = mDateFormat.format(data.created_at)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.review_list_item, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.product_review_list_item, parent, false)
         return ViewHolder(view)
     }
 

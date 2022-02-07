@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neppplus.finalproject_python_userapp_202201.R
-import com.neppplus.finalproject_python_userapp_202201.adapters.OrderItemAdapter
-import com.neppplus.finalproject_python_userapp_202201.adapters.ReviewOrderItemAdapter
+import com.neppplus.finalproject_python_userapp_202201.adapters.OrderItemReviewAdapter
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentReviewCompleteBinding
 import com.neppplus.finalproject_python_userapp_202201.fragments.BaseFragment
 import com.neppplus.finalproject_python_userapp_202201.models.BasicResponse
-import com.neppplus.finalproject_python_userapp_202201.models.CartData
 import com.neppplus.finalproject_python_userapp_202201.models.OrderItemData
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +21,7 @@ class ReviewCompleteFragment : BaseFragment() {
 
     lateinit var binding: FragmentReviewCompleteBinding
     val mOrderItemList = ArrayList<OrderItemData>()
-    lateinit var mOrderItemAdapter: ReviewOrderItemAdapter
+    lateinit var mOrderItemAdapter: OrderItemReviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +39,7 @@ class ReviewCompleteFragment : BaseFragment() {
     }
 
     override fun setupEvents() {
-        mOrderItemAdapter = ReviewOrderItemAdapter(mContext, mOrderItemList)
+        mOrderItemAdapter = OrderItemReviewAdapter(mContext, mOrderItemList)
 
 
     }
