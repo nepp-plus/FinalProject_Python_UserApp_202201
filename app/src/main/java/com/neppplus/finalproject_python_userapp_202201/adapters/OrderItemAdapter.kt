@@ -68,6 +68,7 @@ class OrderItemAdapter(
             btnWriteReview.setOnClickListener {
 
                 val myIntent = Intent(mContext, EditReviewActivity::class.java)
+                myIntent.putExtra("orderItem", data)
                 mContext.startActivity(myIntent)
 
             }
