@@ -190,5 +190,18 @@ class ViewProductDetailActivity : BaseActivity() {
 
         }
 
+        for (info in mProduct.product_infos) {
+            val row = LayoutInflater.from(mContext).inflate(R.layout.product_info_list_item, null)
+
+            val txtDescription = row.findViewById<TextView>(R.id.txtDescription)
+            val txtDescriptionContent = row.findViewById<TextView>(R.id.txtDescriptionContent)
+
+            txtDescription.text = info.description
+            txtDescriptionContent.text = info.description_content
+
+            binding.productInfoLayout.addView(row)
+
+        }
+
     }
 }

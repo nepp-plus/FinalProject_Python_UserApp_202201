@@ -233,11 +233,22 @@
                         android:textSize="18sp"
                         android:text="상품정보" />
 
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/light_gray"
                         android:layout_marginTop="15dp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/productInfoLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/productDetailImgLinearLayout"

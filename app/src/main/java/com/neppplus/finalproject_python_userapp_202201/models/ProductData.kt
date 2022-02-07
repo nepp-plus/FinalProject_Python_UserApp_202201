@@ -12,6 +12,7 @@ class ProductData(
     val product_detail_images: List<ImageData>,
     val product_main_images: List<ImageData>,
     val product_options: List<ProductOptionData>,
+    val product_infos: List<ProductInfoData>,
     val small_category_info: SmallCategoryData,
     val large_category_info: LargeCategoryData,
 
