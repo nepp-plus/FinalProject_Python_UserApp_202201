@@ -14,6 +14,9 @@
         android:theme="@style/Theme.FinalProject_Python_UserApp_202201"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditReviewActivity"
+            android:exported="true" />
+        <activity
             android:name=".ReviewListActivity"
             android:exported="true" />
         <activity

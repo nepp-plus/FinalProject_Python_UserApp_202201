@@ -1,6 +1,7 @@
 package com.neppplus.finalproject_python_userapp_202201.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.neppplus.finalproject_python_userapp_202201.EditReviewActivity
 import com.neppplus.finalproject_python_userapp_202201.R
 import com.neppplus.finalproject_python_userapp_202201.models.LargeCategoryData
 import com.neppplus.finalproject_python_userapp_202201.models.OrderItemData
@@ -61,6 +63,13 @@ class OrderItemAdapter(
             optionListLayout.removeAllViews()
             for (option in data.selected_options) {
                 optionListLayout.addView(makeRow(option))
+            }
+
+            btnWriteReview.setOnClickListener {
+
+                val myIntent = Intent(mContext, EditReviewActivity::class.java)
+                mContext.startActivity(myIntent)
+
             }
 
         }
