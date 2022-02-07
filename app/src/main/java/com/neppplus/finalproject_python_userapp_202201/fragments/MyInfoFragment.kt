@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.neppplus.finalproject_python_userapp_202201.OrderListActivity
 import com.neppplus.finalproject_python_userapp_202201.R
+import com.neppplus.finalproject_python_userapp_202201.ReviewListActivity
 import com.neppplus.finalproject_python_userapp_202201.SplashActivity
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentHomeBinding
 import com.neppplus.finalproject_python_userapp_202201.databinding.FragmentMyInfoBinding
@@ -36,6 +38,15 @@ class MyInfoFragment : BaseFragment() {
     }
 
     override fun setupEvents() {
+
+        binding.btnOrderList.setOnClickListener {
+            val myIntent = Intent(mContext, OrderListActivity::class.java)
+            startActivity(myIntent)
+        }
+        binding.btnReviewList.setOnClickListener {
+            val myIntent = Intent(mContext, ReviewListActivity::class.java)
+            startActivity(myIntent)
+        }
 
         binding.btnLogout.setOnClickListener {
 
