@@ -109,4 +109,10 @@ interface ServerAPIInterface {
     ): Call<BasicResponse>
 
 
+    @GET("/review")
+    fun getRequestMyReview(
+        @Query("type") type: String,
+    ): Call<BasicResponse>
+
+
 }
