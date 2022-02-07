@@ -114,5 +114,14 @@ interface ServerAPIInterface {
         @Query("type") type: String,
     ): Call<BasicResponse>
 
+    @FormUrlEncoded
+    @POST("/review")
+    fun postRequestReview(
+        @Field("order_item_id") orderItemId: Int,
+        @Field("review_title") title: String,
+        @Field("review_content") content: String,
+        @Field("score") score: Float,
+
+        ): Call<BasicResponse>
 
 }
