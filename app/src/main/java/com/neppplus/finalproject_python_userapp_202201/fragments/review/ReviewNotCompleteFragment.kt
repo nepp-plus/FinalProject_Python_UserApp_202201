@@ -52,6 +52,11 @@ class ReviewNotCompleteFragment : BaseFragment() {
         binding.orderItemRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         getMyReviewListFromServer()
     }
 

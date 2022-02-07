@@ -85,7 +85,10 @@ class EditReviewActivity : BaseActivity() {
                         call: Call<BasicResponse>,
                         response: Response<BasicResponse>
                     ) {
-
+                        if (response.isSuccessful) {
+                            Toast.makeText(mContext, "리뷰를 성공적으로 등록했습니다.", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
                     }
 
                     override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
