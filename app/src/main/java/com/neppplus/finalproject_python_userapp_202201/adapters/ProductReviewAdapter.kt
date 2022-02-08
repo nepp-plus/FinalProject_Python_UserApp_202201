@@ -45,9 +45,12 @@ class ProductReviewAdapter(
         private val reviewScoreRatingBar = view.findViewById<BaseRatingBar>(R.id.reviewScoreRatingBar)
         private val txtReviewTitle = view.findViewById<TextView>(R.id.txtReviewTitle)
         private val txtReviewContent = view.findViewById<TextView>(R.id.txtReviewContent)
-        private var txtReviewDate = view.findViewById<TextView>(R.id.txtReviewDate)
+        private val txtReviewDate = view.findViewById<TextView>(R.id.txtReviewDate)
+        private val txtWriterName = view.findViewById<TextView>(R.id.txtWriterName)
 
         fun bind(data: ReviewData, position: Int) {
+
+            txtWriterName.text = data.writer.name
 
             reviewScoreRatingBar.rating = data.score.toFloat()
             txtReviewTitle.text = data.review_title
