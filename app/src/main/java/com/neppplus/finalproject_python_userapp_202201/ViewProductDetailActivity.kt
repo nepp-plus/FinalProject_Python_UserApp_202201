@@ -40,6 +40,8 @@ class ViewProductDetailActivity : BaseActivity() {
 
     lateinit var mProduct : ProductData
 
+    val mFragmentList = ArrayList<Fragment>()
+
     var buyQuantity = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -171,6 +173,9 @@ class ViewProductDetailActivity : BaseActivity() {
         setProductDataToUI()
 
 
+        mFragmentList.add(ProductDetailFragment(mProduct))
+        mFragmentList.add(ProductReviewListFragment(mProduct))
+
         binding.productDetailViewPager.adapter = PagerAdapter(supportFragmentManager, lifecycle)
 
         TabLayoutMediator(binding.productDetailTabLayout, binding.productDetailViewPager) { tab, position ->
@@ -211,7 +216,7 @@ class ViewProductDetailActivity : BaseActivity() {
 
         try {
 
-            val reviewFrag = supportFragmentManager.findFragmentByTag("f1") as ProductReviewListFragment
+            val reviewFrag = mFragmentList[1] as ProductReviewListFragment
             reviewFrag.mReviewList.clear()
             reviewFrag.mReviewList.addAll(mProduct.reviews)
             reviewFrag.mAdapter.notifyDataSetChanged()
@@ -251,15 +256,7 @@ class ViewProductDetailActivity : BaseActivity() {
         FragmentStateAdapter(fm, lc) {
         override fun getItemCount() = 2
         override fun createFragment(position: Int): Fragment {
-            return when (position) {
-
-                0 -> ProductDetailFragment(mProduct)
-                1 -> {
-                    val fReview = ProductReviewListFragment(mProduct)
-                    fReview
-                }
-                else -> error("no such position: $position")
-            }
+            return mFragmentList[position]
         }
     }
 
