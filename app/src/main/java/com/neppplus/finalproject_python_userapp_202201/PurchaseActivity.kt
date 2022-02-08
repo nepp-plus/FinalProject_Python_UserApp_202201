@@ -151,7 +151,6 @@ class PurchaseActivity : BaseActivity() {
                         it?.let {
                             val impUid = it.imp_uid!!
 
-
                             apiService.postRequestOrder(
                                 shipmentInfo.name,
                                 "${shipmentInfo.address1} ${shipmentInfo.address2}",
@@ -172,6 +171,7 @@ class PurchaseActivity : BaseActivity() {
 
                                         Toast.makeText(mContext, "구매가 완료되었습니다.", Toast.LENGTH_SHORT).show()
 
+                                        finish()
                                     }
                                     else {
 
